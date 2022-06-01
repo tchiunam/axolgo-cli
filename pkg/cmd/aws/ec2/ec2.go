@@ -20,21 +20,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package cmd
+package ec2
 
 import (
 	"os"
 
 	"github.com/spf13/cobra"
-	cmdec2 "github.com/tchiunam/axolgo-cli/pkg/cmd/aws/ec2"
-	cmdrds "github.com/tchiunam/axolgo-cli/pkg/cmd/aws/rds"
 )
 
-// For a set of AWS commands.
-var AwsCmd = &cobra.Command{
-	Use:   "aws",
-	Short: "A set of AWS commands",
-	Long:  "A set of AWS commands",
+// For a set of RDS commands.
+var Ec2Cmd = &cobra.Command{
+	Use:   "ec2",
+	Short: "A set of EC2 commands.",
+	Long:  "A set of EC2 commands.",
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Help()
 		os.Exit(1)
@@ -42,6 +40,5 @@ var AwsCmd = &cobra.Command{
 }
 
 func init() {
-	AwsCmd.AddCommand(cmdec2.Ec2Cmd)
-	AwsCmd.AddCommand(cmdrds.RdsCmd)
+	Ec2Cmd.AddCommand(NewCmdDescribeInstances())
 }
