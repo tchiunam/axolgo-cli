@@ -40,5 +40,6 @@ var RdsCmd = &cobra.Command{
 }
 
 func init() {
+	RdsCmd.AddCommand(NewCmdModifyDBParameterGroup())
 	RdsCmd.AddCommand(NewCmdModifyDBClusterParameterGroup())
 }
