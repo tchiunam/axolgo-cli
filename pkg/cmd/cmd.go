@@ -23,12 +23,13 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
+	goflag "flag"
 	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	cmdaws "github.com/tchiunam/axolgo-cli/pkg/cmd/aws"
+	"k8s.io/klog/v2"
 )
 
 var cfgFile string
@@ -49,6 +50,14 @@ func Execute() {
 }
 
 func init() {
+	// Initialize flag's default flagset
+	klog.InitFlags(nil)
+
+	// Add klog flags to cobra
+	goFlagSet := goflag.NewFlagSet("", goflag.PanicOnError)
+	klog.InitFlags(goFlagSet)
+	rootCmd.PersistentFlags().AddGoFlagSet(goFlagSet)
+
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.axolgo.yaml)")
@@ -58,6 +67,9 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+	if err := viper.BindPFlags(rootCmd.Flags()); err != nil {
+		klog.Errorf("Failed to bind flags to viper: %v", err)
+	}
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
@@ -76,7 +88,15 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
+		klog.InfoS("Using config", "file", viper.ConfigFileUsed())
+	}
+
+	// Get verbositgy from viper
+	if viper.GetString("v") == "0" {
+		if err := goflag.Set("v", viper.GetString("v")); err != nil {
+			klog.Errorf("%v", err)
+			return
+		}
 	}
 }
 
