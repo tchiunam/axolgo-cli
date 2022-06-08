@@ -78,7 +78,7 @@ func NewCmdDescribeInstances() *cobra.Command {
 	cmd.Flags().StringArrayVarP(&o.PublicIPAddresses, "public-ip-address", "b", nil, "Public IP address.")
 	cmd.Flags().StringArrayVarP(&o.SecurityGroupIDs, "security-group-id", "s", nil, "Security Group ID.")
 	cmd.Flags().StringArrayVarP(&o.IamInstanceProfileArns, "iam-instance-profile.arn", "m", nil, "IAM instance profile's ARN.")
-	cmd.Flags().Int32VarP(&o.MaxResults, "max-results", "r", 10, "Max. no. of records per batch.")
+	cmd.Flags().Int32VarP(&o.MaxResults, "max-results", "r", 0, "Max. no. of records per batch.")
 
 	return cmd
 
@@ -106,9 +106,17 @@ func (o *DescribeInstancesOptions) complete(cmd *cobra.Command, args []string) e
 				})
 		}
 	}
-	input := &awsec2.DescribeInstancesInput{
-		Filters:    filters,
-		MaxResults: &o.MaxResults,
+	// MaxResults has a weird behvior. When it is specified,
+	// The AWS client may not return any records even if there
+	// is only one match. This happened to the case when
+	// only Private IP Address or Security Group ID is given as
+	// filter.
+	// A workaround is to not set MaxResults unless it's provided
+	// in the flag.
+	klog.V(6).InfoS("max returned results", "MaxResults", o.MaxResults)
+	input := &awsec2.DescribeInstancesInput{Filters: filters}
+	if o.MaxResults > 0 {
+		input.MaxResults = &o.MaxResults
 	}
 	_, result, err := ec2.RunDescribeInstances(input)
 	if err != nil {
