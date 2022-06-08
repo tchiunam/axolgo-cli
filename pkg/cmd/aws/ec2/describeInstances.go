@@ -97,6 +97,7 @@ func (o *DescribeInstancesOptions) complete(cmd *cobra.Command, args []string) e
 	// Built the Filter object as an input of AWS call
 	var filters []types.Filter
 	for filterName, filterValues := range filterNVs {
+		klog.V(6).InfoS("create filter", "filterName", filterName, "filterValues", filterValues, "len(filterValues)", len(filterValues))
 		if len(filterValues) != 0 {
 			filters = append(filters,
 				types.Filter{
@@ -111,7 +112,7 @@ func (o *DescribeInstancesOptions) complete(cmd *cobra.Command, args []string) e
 	}
 	_, result, err := ec2.RunDescribeInstances(input)
 	if err != nil {
-		panic(err)
+		klog.Fatalf("Failed to describe instances: %v", err)
 	}
 
 	var outputStringBytesBuffer bytes.Buffer
