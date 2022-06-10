@@ -43,6 +43,23 @@ go install github.com/tchiunam/axolgo-cli@v1.2.3
 
 See 'go help install' or https://golang.org/ref/mod#go-install for details.
 
+## Examples
+### AWS
+To update database cluster parameter group:
+```
+axolgo aws rds modifyDBClusterParameterGroup --name <parameter_group_name> --parameter-file <yaml_file_containing_parameters>
+```
+
+To describe EC2 instances with given Instance IDs:
+```
+axolgo aws ec2 describeInstances --instance-id <instance_id> --instance-id <instance_id>
+```
+
+To describe EC2 instances with given Private IP Addresses:
+```
+axolgo aws ec2 describeInstances --private-ip-address 127.0.0.1 --private-ip-address 127.0.0.2
+```
+
 ---
 #### See more  
 1. [axolgo-lib](https://github.com/tchiunam/axolgo-lib) for the base library
