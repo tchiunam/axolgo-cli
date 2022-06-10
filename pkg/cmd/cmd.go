@@ -24,6 +24,7 @@ package cmd
 
 import (
 	goflag "flag"
+	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -32,7 +33,19 @@ import (
 	"k8s.io/klog/v2"
 )
 
-var cfgFile string
+// Structure of logging configuration
+type AxolgoConfigLogging struct {
+	// Log level verbosity
+	LogLevelVerbosity int `mapstructure:"log_level_verbosity"`
+}
+
+// Structure of axolgo configuration
+type AxolgoConfig struct {
+	// logging configuration
+	Logging AxolgoConfigLogging `mapstructure:"logging"`
+}
+
+var cfgFilePath string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -60,42 +73,52 @@ func init() {
 
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.axolgo.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFilePath, "config-file-path", "./config", "config file path (default is $HOME)")
 
 	configureCommandStructure()
 }
 
-// initConfig reads in config file and ENV variables if set.
+// initConfig reads in config file and ENV variables if set
 func initConfig() {
 	if err := viper.BindPFlags(rootCmd.Flags()); err != nil {
 		klog.Errorf("Failed to bind flags to viper: %v", err)
 	}
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find home directory.
-		home, err := os.UserHomeDir()
-		cobra.CheckErr(err)
-
-		// Search config in home directory with name ".axolgo" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigType("yaml")
-		viper.SetConfigName(".axolgo")
-	}
+	// Use config file path from the flag
+	viper.AddConfigPath(cfgFilePath)
 
 	viper.AutomaticEnv() // read in environment variables that match
 
-	// If a config file is found, read it in.
+	viper.SetConfigType("yaml")
+	viper.SetConfigName("axolgo")
+	// If base config file is found, read it in
 	if err := viper.ReadInConfig(); err == nil {
-		klog.InfoS("Using config", "file", viper.ConfigFileUsed())
+		klog.InfoS("Using base config", "file", viper.ConfigFileUsed())
+	} else {
+		klog.Error(err)
+		os.Exit(1)
 	}
 
-	// Get verbositgy from viper
-	if viper.GetString("v") == "0" {
-		if err := goflag.Set("v", viper.GetString("v")); err != nil {
+	// Read mutliple sets of configuration file
+	for _, configSet := range []string{"logging"} {
+		// If a config file is found, read it in
+		viper.SetConfigName("axolgo-" + configSet)
+		if err := viper.MergeInConfig(); err == nil {
+			klog.InfoS("Using "+configSet+" config", "file", viper.ConfigFileUsed())
+		} else {
+			klog.Errorf("Failed to read axolgo-%v.yaml.", configSet)
+			os.Exit(1)
+		}
+	}
+
+	var axolgoConfig AxolgoConfig
+	if err := viper.Unmarshal(&axolgoConfig); err != nil {
+		klog.Fatalf("Encountered error when parsing axolgo configuration file: %v", err)
+	}
+
+	// Get verbosity from viper
+	if axolgoConfig.Logging.LogLevelVerbosity > 0 {
+		if err := goflag.Set("v", fmt.Sprintf("%v", axolgoConfig.Logging.LogLevelVerbosity)); err != nil {
 			klog.Errorf("%v", err)
-			return
 		}
 	}
 }
