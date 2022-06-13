@@ -23,22 +23,28 @@ THE SOFTWARE.
 package ec2
 
 import (
+	"context"
 	"os"
 
 	"github.com/spf13/cobra"
 )
 
-// For a set of RDS commands.
-var Ec2Cmd = &cobra.Command{
-	Use:   "ec2",
-	Short: "A set of EC2 commands.",
-	Long:  "A set of EC2 commands.",
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Help()
-		os.Exit(1)
-	},
+// NewEc2Cmd creates the `ec2` command
+func NewEc2Cmd(ctx *context.Context) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "ec2",
+		Short: "A set of EC2 commands.",
+		Long:  "A set of EC2 commands.",
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.Help()
+			os.Exit(1)
+		},
+	}
+
+	cmd.AddCommand(NewCmdDescribeInstances(ctx))
+
+	return cmd
 }
 
 func init() {
-	Ec2Cmd.AddCommand(NewCmdDescribeInstances())
 }

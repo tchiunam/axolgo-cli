@@ -23,14 +23,17 @@ THE SOFTWARE.
 package rds
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/tchiunam/axolgo-aws/rds"
+	"github.com/tchiunam/axolgo-aws/util"
+	"github.com/tchiunam/axolgo-cli/pkg/types"
 	"github.com/tchiunam/axolgo-lib/io/ioutil"
-	"github.com/tchiunam/axolgo-lib/types"
+	axolgolibtypes "github.com/tchiunam/axolgo-lib/types"
 )
 
 var (
@@ -61,7 +64,7 @@ type ModifyDBClusterParameterGroupOptions struct {
 }
 
 // NewCmdModifyDBClusterParameterGroup creates the `modifyDBClusterParameterGroup` command
-func NewCmdModifyDBClusterParameterGroup() *cobra.Command {
+func NewCmdModifyDBClusterParameterGroup(ctx *context.Context) *cobra.Command {
 	o := ModifyDBClusterParameterGroupOptions{}
 
 	cmd := &cobra.Command{
@@ -71,7 +74,7 @@ func NewCmdModifyDBClusterParameterGroup() *cobra.Command {
 		Long:                  modifyDBClusterParameterGroupLong,
 		Example:               modifyDBClusterParameterGroupExample,
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := o.complete(cmd, args); err != nil {
+			if err := o.complete(ctx, cmd, args); err != nil {
 				panic(err)
 			}
 		},
@@ -87,21 +90,21 @@ func NewCmdModifyDBClusterParameterGroup() *cobra.Command {
 
 }
 
-// Complete takes the command arguments and execute.
-func (o *ModifyDBClusterParameterGroupOptions) complete(cmd *cobra.Command, args []string) error {
+// Complete takes the command arguments and execute
+func (o *ModifyDBClusterParameterGroupOptions) complete(ctx *context.Context, _ *cobra.Command, args []string) error {
 	yamlFile, err := ioutil.ReadYamlFile(o.ParameterFile)
 	if err != nil {
 		return err
 	}
 	yamlParameters := yamlFile.(*viper.Viper)
 
-	parameters := [][]types.Parameter{make([]types.Parameter, 0), make([]types.Parameter, 0)}
+	parameters := [][]axolgolibtypes.Parameter{make([]axolgolibtypes.Parameter, 0), make([]axolgolibtypes.Parameter, 0)}
 	for i, t := range []string{"static", "dynamic"} {
 		if section := yamlParameters.Get(t); section != nil {
 			for k, v := range section.(map[string]interface{}) {
 				parameters[i] = append(
 					parameters[i],
-					types.Parameter{
+					axolgolibtypes.Parameter{
 						Name:  aws.String(k),
 						Value: aws.String(fmt.Sprintf("%v", v)),
 					})
@@ -109,7 +112,8 @@ func (o *ModifyDBClusterParameterGroupOptions) complete(cmd *cobra.Command, args
 		}
 	}
 
-	_, err = rds.RunModifyDBClusterParameterGroup(o.Name, parameters[0], parameters[1])
+	axolgoConfig := viper.Get("axolgo-config").(types.AxolgoConfig)
+	_, err = rds.RunModifyDBClusterParameterGroup(o.Name, parameters[0], parameters[1], util.WithRegion(axolgoConfig.AWS.Region))
 
 	return err
 }

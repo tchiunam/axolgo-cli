@@ -23,23 +23,31 @@ THE SOFTWARE.
 package rds
 
 import (
+	"context"
 	"os"
 
 	"github.com/spf13/cobra"
 )
 
-// For a set of RDS commands.
-var RdsCmd = &cobra.Command{
-	Use:   "rds",
-	Short: "A set of RDS commands.",
-	Long:  "A set of RDS commands.",
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Help()
-		os.Exit(1)
-	},
+// NewEc2Cmd creates the `ec2` command
+func NewRdsCmd(ctx *context.Context) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "rds",
+		Short: "A set of RDS commands.",
+		Long:  "A set of RDS commands.",
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.Help()
+			os.Exit(1)
+		},
+	}
+
+	cmd.AddCommand(
+		NewCmdModifyDBParameterGroup(ctx),
+		NewCmdModifyDBClusterParameterGroup(ctx),
+	)
+
+	return cmd
 }
 
 func init() {
-	RdsCmd.AddCommand(NewCmdModifyDBParameterGroup())
-	RdsCmd.AddCommand(NewCmdModifyDBClusterParameterGroup())
 }

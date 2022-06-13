@@ -23,6 +23,7 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"context"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -30,18 +31,25 @@ import (
 	cmdrds "github.com/tchiunam/axolgo-cli/pkg/cmd/aws/rds"
 )
 
-// For a set of AWS commands.
-var AwsCmd = &cobra.Command{
-	Use:   "aws",
-	Short: "A set of AWS commands",
-	Long:  "A set of AWS commands",
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Help()
-		os.Exit(1)
-	},
+// NewAwsCmd creates the `aws` command
+func NewAwsCmd(ctx *context.Context) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "aws",
+		Short: "A set of AWS commands",
+		Long:  "A set of AWS commands",
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.Help()
+			os.Exit(1)
+		},
+	}
+
+	cmd.AddCommand(
+		cmdec2.NewEc2Cmd(ctx),
+		cmdrds.NewRdsCmd(ctx),
+	)
+
+	return cmd
 }
 
 func init() {
-	AwsCmd.AddCommand(cmdec2.Ec2Cmd)
-	AwsCmd.AddCommand(cmdrds.RdsCmd)
 }

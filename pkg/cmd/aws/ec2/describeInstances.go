@@ -24,6 +24,7 @@ package ec2
 
 import (
 	"bytes"
+	"context"
 
 	"k8s.io/klog/v2"
 
@@ -31,10 +32,13 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	awsec2 "github.com/aws/aws-sdk-go-v2/service/ec2"
-	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
+	awsec2types "github.com/aws/aws-sdk-go-v2/service/ec2/types"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"github.com/tchiunam/axolgo-aws/ec2"
-	"github.com/tchiunam/axolgo-lib/utility"
+	"github.com/tchiunam/axolgo-aws/util"
+	"github.com/tchiunam/axolgo-cli/pkg/types"
+	axolgolibutil "github.com/tchiunam/axolgo-lib/util"
 )
 
 var (
@@ -57,7 +61,7 @@ type DescribeInstancesOptions struct {
 }
 
 // NewCmdDescribeInstances creates the `describeInstances` command
-func NewCmdDescribeInstances() *cobra.Command {
+func NewCmdDescribeInstances(ctx *context.Context) *cobra.Command {
 	o := DescribeInstancesOptions{}
 
 	cmd := &cobra.Command{
@@ -67,7 +71,7 @@ func NewCmdDescribeInstances() *cobra.Command {
 		Long:                  describeInstancesLong,
 		Example:               describeInstancesExample,
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := o.complete(cmd, args); err != nil {
+			if err := o.complete(ctx, cmd, args); err != nil {
 				panic(err)
 			}
 		},
@@ -85,7 +89,7 @@ func NewCmdDescribeInstances() *cobra.Command {
 }
 
 // Complete takes the command arguments and execute.
-func (o *DescribeInstancesOptions) complete(cmd *cobra.Command, args []string) error {
+func (o *DescribeInstancesOptions) complete(ctx *context.Context, _ *cobra.Command, args []string) error {
 	filterNVs := map[string][]string{
 		"instance-id":              o.InstanceIDs,
 		"private-ip-address":       o.PrivateIPAddresses,
@@ -95,12 +99,12 @@ func (o *DescribeInstancesOptions) complete(cmd *cobra.Command, args []string) e
 	}
 
 	// Built the Filter object as an input of AWS call
-	var filters []types.Filter
+	var filters []awsec2types.Filter
 	for filterName, filterValues := range filterNVs {
 		klog.V(6).InfoS("create filter", "filterName", filterName, "filterValues", filterValues, "len(filterValues)", len(filterValues))
 		if len(filterValues) != 0 {
 			filters = append(filters,
-				types.Filter{
+				awsec2types.Filter{
 					Name:   aws.String(filterName),
 					Values: filterValues,
 				})
@@ -118,7 +122,9 @@ func (o *DescribeInstancesOptions) complete(cmd *cobra.Command, args []string) e
 	if o.MaxResults > 0 {
 		input.MaxResults = &o.MaxResults
 	}
-	_, result, err := ec2.RunDescribeInstances(input)
+
+	axolgoConfig := viper.Get("axolgo-config").(types.AxolgoConfig)
+	_, result, err := ec2.RunDescribeInstances(input, util.WithRegion(axolgoConfig.AWS.Region))
 	if err != nil {
 		klog.Fatalf("Failed to describe instances: %v", err)
 	}
@@ -132,12 +138,15 @@ func (o *DescribeInstancesOptions) complete(cmd *cobra.Command, args []string) e
 	if err != nil {
 		klog.Fatalf("Encountered error when creating Tag template string: %v", err)
 	}
+
+	klog.V(2).InfoS("result", "NextToken", result.NextToken, "len(Reservations)", len(result.Reservations))
+	// Not handling NextToken. Do this when there is a need.
 	for _, r := range result.Reservations {
 		klog.Infof("Reservation ID: %v", *r.ReservationId)
 		for _, i := range r.Instances {
 			klog.Infof("    Instance ID: %v", *i.InstanceId)
-			klog.Infof("    Private IP address: %v", *utility.HushedStringPtr(i.PrivateIpAddress))
-			klog.Infof("    Public IP address: %v", *utility.HushedStringPtr(i.PublicIpAddress))
+			klog.Infof("    Private IP address: %v", *axolgolibutil.HushedStringPtr(i.PrivateIpAddress))
+			klog.Infof("    Public IP address: %v", *axolgolibutil.HushedStringPtr(i.PublicIpAddress))
 			if err := securityGroupIDTmpl.Execute(&outputStringBytesBuffer, i); err == nil {
 				klog.Infof("    Security group IDs: [%v]", outputStringBytesBuffer.String())
 				outputStringBytesBuffer.Reset()
@@ -147,7 +156,7 @@ func (o *DescribeInstancesOptions) complete(cmd *cobra.Command, args []string) e
 			if i.IamInstanceProfile == nil {
 				klog.Info("    IAM instance profile ARN: []")
 			} else {
-				klog.Infof("    IAM instance profile ARN: [%v]", *utility.HushedStringPtr(i.IamInstanceProfile.Arn))
+				klog.Infof("    IAM instance profile ARN: [%v]", *axolgolibutil.HushedStringPtr(i.IamInstanceProfile.Arn))
 			}
 			klog.Infof("    Instance type: %v", i.InstanceType)
 			if err := tagsTmpl.Execute(&outputStringBytesBuffer, i); err == nil {
