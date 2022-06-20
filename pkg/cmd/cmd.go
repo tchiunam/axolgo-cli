@@ -32,6 +32,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	cmdaws "github.com/tchiunam/axolgo-cli/pkg/cmd/aws"
+	cmdgcp "github.com/tchiunam/axolgo-cli/pkg/cmd/gcp"
 	"github.com/tchiunam/axolgo-cli/pkg/types"
 	"k8s.io/klog/v2"
 )
@@ -124,4 +125,5 @@ func initConfig() {
 
 func configureCommandStructure(ctx *context.Context) {
 	rootCmd.AddCommand(cmdaws.NewAWSCmd(ctx))
+	rootCmd.AddCommand(cmdgcp.NewGCPCmd(ctx))
 }
