@@ -31,8 +31,8 @@ import (
 	cmdrds "github.com/tchiunam/axolgo-cli/pkg/cmd/aws/rds"
 )
 
-// NewAwsCmd creates the `aws` command
-func NewAwsCmd(ctx *context.Context) *cobra.Command {
+// NewAWSCmd creates the `aws` command
+func NewAWSCmd(ctx *context.Context) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "aws",
 		Short: "A set of AWS commands",

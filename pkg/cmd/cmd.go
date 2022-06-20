@@ -123,5 +123,5 @@ func initConfig() {
 }
 
 func configureCommandStructure(ctx *context.Context) {
-	rootCmd.AddCommand(cmdaws.NewAwsCmd(ctx))
+	rootCmd.AddCommand(cmdaws.NewAWSCmd(ctx))
 }
