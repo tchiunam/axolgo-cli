@@ -65,7 +65,7 @@ func NewCmdDescribeInstances(ctx *context.Context) *cobra.Command {
 	o := DescribeInstancesOptions{}
 
 	cmd := &cobra.Command{
-		Use:                   "describeInstances -f FILENAME",
+		Use:                   "describeInstances [-i] [-a] [-b] [-s] [-m] [-r]",
 		DisableFlagsInUseLine: true,
 		Short:                 "Describe EC2 instances.",
 		Long:                  describeInstancesLong,
