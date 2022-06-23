@@ -12,9 +12,16 @@ type AxolgoConfigAWS struct {
 	Region string `mapstructure:"region"`
 }
 
+// Structure of GCP configuration
+type AxolgoConfigGCP struct {
+	// Google application credentials file
+	GoogleApplicationCredentials string `mapstructure:"google_application_credentials"`
+}
+
 // Structure of axolgo configuration
 type AxolgoConfig struct {
 	// logging configuration
 	Logging AxolgoConfigLogging `mapstructure:"logging"`
 	AWS     AxolgoConfigAWS     `mapstructure:"aws"`
+	GCP     AxolgoConfigGCP     `mapstructure:"gcp"`
 }

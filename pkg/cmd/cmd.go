@@ -95,7 +95,7 @@ func initConfig() {
 	}
 
 	// Read mutliple sets of configuration file
-	for _, configSet := range []string{"aws", "logging"} {
+	for _, configSet := range []string{"aws", "gcp", "logging"} {
 		// If a config file is found, read it in
 		viper.SetConfigName("axolgo-" + configSet)
 		if err := viper.MergeInConfig(); err == nil {

@@ -41,6 +41,10 @@ func NewComputeCmd(ctx *context.Context) *cobra.Command {
 		},
 	}
 
+	cmd.AddCommand(
+		NewCmdListInstances(ctx),
+	)
+
 	return cmd
 }
 
