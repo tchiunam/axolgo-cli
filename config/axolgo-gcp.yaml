@@ -1,2 +1,2 @@
 gcp:
-  google_application_credentials: ~/.gcp_credentials
+  google-application-credentials: ~/.gcp_credentials

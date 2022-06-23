@@ -3,7 +3,7 @@ package types
 // Structure of logging configuration
 type AxolgoConfigLogging struct {
 	// Log level verbosity
-	LogLevelVerbosity int `mapstructure:"log_level_verbosity"`
+	LogLevelVerbosity int `mapstructure:"log-level-verbosity"`
 }
 
 // Structure of AWS configuration
@@ -15,7 +15,7 @@ type AxolgoConfigAWS struct {
 // Structure of GCP configuration
 type AxolgoConfigGCP struct {
 	// Google application credentials file
-	GoogleApplicationCredentials string `mapstructure:"google_application_credentials"`
+	GoogleApplicationCredentials string `mapstructure:"google-application-credentials"`
 }
 
 // Structure of axolgo configuration
