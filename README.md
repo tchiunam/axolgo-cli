@@ -59,6 +59,16 @@ To describe EC2 instances with given Private IP Addresses:
 ```
 axolgo aws ec2 describeInstances --private-ip-address 127.0.0.1 --private-ip-address 127.0.0.2
 ```
+### GCP
+To list all compute engine instances in a zone:
+```
+axolgo gcp compute listInstances --project proj1 --zone asia-east1-a
+```
+
+To list compute engine instances with the given ID:
+```
+axolgo gcp compute listInstances --project proj1 --zone asia-east1-a --id 7452065390813417482
+```
 
 ---
 #### See more  
