@@ -16,6 +16,7 @@ type AxolgoConfigAWS struct {
 type AxolgoConfigGCP struct {
 	// Google application credentials file
 	GoogleApplicationCredentials string `mapstructure:"google-application-credentials"`
+	Zone                         string `mapstructure:"zone"`
 }
 
 // Structure of axolgo configuration

@@ -1,2 +1,3 @@
 gcp:
   google-application-credentials: ~/.gcp_credentials
+  zone: asia-east1-a

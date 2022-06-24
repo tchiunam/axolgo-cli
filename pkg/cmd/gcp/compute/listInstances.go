@@ -44,7 +44,7 @@ var (
 given critera.
 `
 	listInstancesExample = `  # List comput engine instance
-  axolgo gcp compute listInstances -project proj1 --zone asia-east1-a --instance-id i-831ao9b7co029d3ef
+  axolgo gcp compute listInstances --project proj1 --zone asia-east1-a --id 7452065390813417482
 `
 )
 
@@ -62,7 +62,7 @@ func NewCmdListInstances(ctx *context.Context) *cobra.Command {
 	o := ListInstancesOptions{}
 
 	cmd := &cobra.Command{
-		Use:                   "listInstances [-p] [-z] [-i] [-n] [-r]",
+		Use:                   "listInstances -p [-z] [-i] [-n] [-r]",
 		DisableFlagsInUseLine: true,
 		Short:                 "List compute engine instances.",
 		Long:                  listInstancesLong,
@@ -81,7 +81,6 @@ func NewCmdListInstances(ctx *context.Context) *cobra.Command {
 	cmd.Flags().Int32VarP(&o.MaxResults, "max-results", "r", 0, "Max. no. of records per batch.")
 
 	cmd.MarkFlagRequired("project")
-	cmd.MarkFlagRequired("zone")
 
 	return cmd
 
@@ -107,16 +106,20 @@ func (o *ListInstancesOptions) complete(ctx *context.Context, _ *cobra.Command, 
 	}
 	f := strings.Join(filters, " or ")
 
-	req := &computepb.ListInstancesRequest{
-		Project: o.Project,
-		Zone:    o.Zone,
-	}
-	if f != "" {
-		req.Filter = &f
-	}
-
 	axolgoConfig := viper.Get("axolgo-config").(types.AxolgoConfig)
 	klog.V(3).InfoS("axolgoConfig", "GCP.GoogleApplicationCredentials", axolgoConfig.GCP.GoogleApplicationCredentials)
+
+	// Use zone configured in the config file if not specified
+	zone := o.Zone
+	if zone == "" {
+		zone = axolgoConfig.GCP.Zone
+	}
+	req := &computepb.ListInstancesRequest{
+		Project: o.Project,
+		Zone:    zone,
+		Filter:  &f,
+	}
+
 	c, it, err := compute.RunListInstances(req, util.WithCredentialsFile(axolgolibutil.ExpandPath(axolgoConfig.GCP.GoogleApplicationCredentials)))
 	if err != nil {
 		klog.Fatalf("Failed to list compute engine instances: %v", err)
