@@ -96,15 +96,20 @@ func initConfig() {
 
 	// Read mutliple sets of configuration file
 	for _, configSet := range []string{"aws", "gcp", "logging"} {
-		// If a config file is found, read it in
-		viper.SetConfigName("axolgo-" + configSet)
-		if err := viper.MergeInConfig(); err == nil {
-			// This logging level is triggered by command line argument only
-			// because the configuration file has not been loaded yet
-			klog.V(1).InfoS("Using "+configSet+" config", "file", viper.ConfigFileUsed())
-		} else {
-			klog.Errorf("Failed to read axolgo-%v.yaml.", configSet)
-			os.Exit(1)
+		// Check if the config file exists
+		configName := "axolgo-" + configSet
+		// Config file is optional
+		if _, err := os.Stat(fmt.Sprintf("%s/%s.yaml", cfgFilePath, configName)); err == nil {
+			// If a config file is found, read it in
+			viper.SetConfigName(configName)
+			if err := viper.MergeInConfig(); err == nil {
+				// This logging level is triggered by command line argument only
+				// because the configuration file has not been loaded yet
+				klog.V(1).InfoS("Using "+configSet+" config", "file", viper.ConfigFileUsed())
+			} else {
+				klog.Errorf("Failed to read axolgo-%v.yaml.", configSet)
+				os.Exit(1)
+			}
 		}
 	}
 
