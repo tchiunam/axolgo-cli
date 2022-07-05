@@ -6,6 +6,8 @@ designed to fit daily operational usage and the sub-command is
 added for better experience. You may configure **axolgo** through 
 configuration file or command line parameters.
 
+Go package: https://pkg.go.dev/github.com/tchiunam/axolgo-cli
+
 ## Use it with your Go module
 To add as dependency for your package or upgrade to the latest version:
 ```
