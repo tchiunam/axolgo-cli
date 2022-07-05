@@ -77,5 +77,4 @@ axolgo gcp compute listInstances --project proj1 --zone asia-east1-a --id 745206
 ---
 #### See more  
 1. [axolgo-lib](https://github.com/tchiunam/axolgo-lib) for the base library
-2. [axolgo-aws](https://github.com/tchiunam/axolgo-aws) for using AWS SDK
-3. [axolgo-gcp](https://github.com/tchiunam/axolgo-gcp) for using GCP API
+2. [axolgo-cloud](https://github.com/tchiunam/axolgo-cloud) for using cloud library (AWS SDK and GCP API)

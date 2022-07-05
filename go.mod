@@ -7,11 +7,10 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.45.0
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.12.0
-	github.com/tchiunam/axolgo-aws v0.0.1
-	github.com/tchiunam/axolgo-gcp v0.0.0-00010101000000-000000000000
-	github.com/tchiunam/axolgo-lib v0.0.1
-	google.golang.org/api v0.85.0
-	google.golang.org/genproto v0.0.0-20220622131801-db39fadba55f
+	github.com/tchiunam/axolgo-cloud v0.0.2
+	github.com/tchiunam/axolgo-lib v0.0.2
+	google.golang.org/api v0.86.0
+	google.golang.org/genproto v0.0.0-20220630174209-ad1d48641aa7
 	k8s.io/klog/v2 v2.60.1
 )
 
@@ -47,9 +46,9 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.3.0 // indirect
 	go.opencensus.io v0.23.0 // indirect
-	golang.org/x/net v0.0.0-20220617184016-355a448f1bc9 // indirect
-	golang.org/x/oauth2 v0.0.0-20220608161450-d0670ef3b1eb // indirect
-	golang.org/x/sys v0.0.0-20220615213510-4f61da869c0c // indirect
+	golang.org/x/net v0.0.0-20220624214902-1bab6f366d9e // indirect
+	golang.org/x/oauth2 v0.0.0-20220622183110-fd043fe589d2 // indirect
+	golang.org/x/sys v0.0.0-20220624220833-87e55d714810 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/grpc v1.47.0 // indirect
@@ -61,6 +60,4 @@ require (
 
 replace github.com/tchiunam/axolgo-lib => ../axolgo-lib
 
-replace github.com/tchiunam/axolgo-aws => ../axolgo-aws
-
-replace github.com/tchiunam/axolgo-gcp => ../axolgo-gcp
+replace github.com/tchiunam/axolgo-cloud => ../axolgo-cloud

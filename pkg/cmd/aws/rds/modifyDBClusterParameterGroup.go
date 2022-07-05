@@ -29,9 +29,9 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/tchiunam/axolgo-aws/rds"
-	"github.com/tchiunam/axolgo-aws/util"
 	"github.com/tchiunam/axolgo-cli/pkg/types"
+	"github.com/tchiunam/axolgo-cloud/aws/rds"
+	"github.com/tchiunam/axolgo-cloud/aws/util"
 	"github.com/tchiunam/axolgo-lib/io/ioutil"
 	axolgolibtypes "github.com/tchiunam/axolgo-lib/types"
 )
