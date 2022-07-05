@@ -1,4 +1,6 @@
 # axolgo-cli, the Axolotl CLI Library in Golang
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 This is the CLI library of the Axolotl series in Golang. Command is 
 designed to fit daily operational usage and the sub-command is 
 added for better experience. You may configure **axolgo** through 
