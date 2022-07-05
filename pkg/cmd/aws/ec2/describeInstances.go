@@ -35,9 +35,9 @@ import (
 	awsec2types "github.com/aws/aws-sdk-go-v2/service/ec2/types"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/tchiunam/axolgo-aws/ec2"
-	"github.com/tchiunam/axolgo-aws/util"
 	"github.com/tchiunam/axolgo-cli/pkg/types"
+	"github.com/tchiunam/axolgo-cloud/aws/ec2"
+	"github.com/tchiunam/axolgo-cloud/aws/util"
 	axolgolibutil "github.com/tchiunam/axolgo-lib/util"
 )
 
