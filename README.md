@@ -1,4 +1,5 @@
 # axolgo-cli, the Axolotl CLI Library in Golang
+[![CodeQL](https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 This is the CLI library of the Axolotl series in Golang. Command is 
