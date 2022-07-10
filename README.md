@@ -1,6 +1,7 @@
 # axolgo-cli, the Axolotl CLI Library in Golang
 [![Go](https://github.com/tchiunam/axolgo-cli/actions/workflows/go.yml/badge.svg)](https://github.com/tchiunam/axolgo-cli/actions/workflows/go.yml)
 [![Version](https://img.shields.io/badge/Version-v0.0.3-yellow.svg)](https://github.com/tchiunam/axolgo-cli/releases/tag/v0.0.3)
+[![codecov](https://codecov.io/gh/tchiunam/axolgo-cli/branch/main/graph/badge.svg?token=R38VYBN1AL)](https://codecov.io/gh/tchiunam/axolgo-cli)
 [![CodeQL](https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
