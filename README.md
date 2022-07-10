@@ -1,3 +1,5 @@
+<img src="images/axolgo-logo-transparent.png" width="50%" />
+
 # axolgo-cli, the Axolotl CLI Library in Golang
 [![Go](https://github.com/tchiunam/axolgo-cli/actions/workflows/go.yml/badge.svg)](https://github.com/tchiunam/axolgo-cli/actions/workflows/go.yml)
 [![Version](https://img.shields.io/badge/Version-v0.0.3-yellow.svg)](https://github.com/tchiunam/axolgo-cli/releases/tag/v0.0.3)
