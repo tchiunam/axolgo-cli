@@ -276,6 +276,10 @@ github.com/stretchr/testify v1.7.1 h1:5TQK59W5E3v0r2duFAb7P95B6hEeOyEnHRa8MjYSMT
 github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/subosito/gotenv v1.3.0 h1:mjC+YW8QpAdXibNi+vNWgzmgBH4+5l5dCXv8cNysBLI=
 github.com/subosito/gotenv v1.3.0/go.mod h1:YzJjq/33h7nrwdY+iHMhEOEEbW0ovIz0tB6t6PwAXzs=
+github.com/tchiunam/axolgo-cloud v0.0.3 h1:f8e7KvCdGGrPjJS31tEreSwwfWt6hIeopDDUwNf5YX8=
+github.com/tchiunam/axolgo-cloud v0.0.3/go.mod h1:ZesT93s6+ZMDKPMV1cjSTwY413PyzIz5bHNQWKO5zpU=
+github.com/tchiunam/axolgo-lib v0.0.3 h1:Z//iOQT/9qEdrUbQsDuKg5zrbtRLx4lUKvh3SUMdQxQ=
+github.com/tchiunam/axolgo-lib v0.0.3/go.mod h1:34hBjyl0+4V+ugIj6AoH2bzHiuoxgU1ZQcGa3KGnnV4=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
