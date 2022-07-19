@@ -7,8 +7,8 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.45.0
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.12.0
-	github.com/tchiunam/axolgo-cloud v0.0.3
-	github.com/tchiunam/axolgo-lib v0.0.3
+	github.com/tchiunam/axolgo-cloud v0.1.0
+	github.com/tchiunam/axolgo-lib v0.1.0
 	google.golang.org/api v0.86.0
 	google.golang.org/genproto v0.0.0-20220630174209-ad1d48641aa7
 	k8s.io/klog/v2 v2.60.1
