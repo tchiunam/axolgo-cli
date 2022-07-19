@@ -8,6 +8,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/tchiunam/axolgo-cli)](https://goreportcard.com/report/github.com/tchiunam/axolgo-cli)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/tchiunam/axolgo-cli)](https://pkg.go.dev/github.com/tchiunam/axolgo-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli.svg?type=shield)](https://app.fossa.com/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli?ref=badge_shield)
 
 This is the CLI library of the Axolotl series in Golang. Command is 
 designed to fit daily operational usage and the sub-command is 
@@ -97,3 +98,6 @@ axolgo gcp compute listInstances --project proj1 --zone asia-east1-a --id 745206
 #### See more  
 1. [axolgo-lib](https://github.com/tchiunam/axolgo-lib) for the base library
 2. [axolgo-cloud](https://github.com/tchiunam/axolgo-cloud) for using cloud library (AWS SDK and GCP API)
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli.svg?type=large)](https://app.fossa.com/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli?ref=badge_large)
