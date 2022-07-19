@@ -9,6 +9,7 @@
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/tchiunam/axolgo-cli)](https://pkg.go.dev/github.com/tchiunam/axolgo-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![FOSSA Status](https://app.fossa.com/api/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli.svg?type=shield)](https://app.fossa.com/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli?ref=badge_shield)
+[![Repository Size](https://img.shields.io/github/repo-size/tchiunam/axolgo-lib.svg?label=Repo%20size)](https://github.com/tchiunam/axolgo-lib)
 
 This is the CLI library of the Axolotl series in Golang. Command is 
 designed to fit daily operational usage and the sub-command is 
