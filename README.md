@@ -53,6 +53,17 @@ go install github.com/tchiunam/axolgo-cli@v1.2.3
 
 See 'go help install' or https://golang.org/ref/mod#go-install for details.
 
+## Run test
+To run test:
+```
+go test ./...
+```
+
+To run test with coverage result:
+```
+go test -coverpkg=./... ./...
+```
+
 ## Examples
 ### AWS
 To update database cluster parameter group:
