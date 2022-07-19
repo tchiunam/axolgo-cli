@@ -5,6 +5,7 @@
 [![Version](https://img.shields.io/github/v/release/tchiunam/axolgo-cli?sort=semver)](https://github.com/tchiunam/axolgo-cli/releases)
 [![codecov](https://codecov.io/gh/tchiunam/axolgo-cli/branch/main/graph/badge.svg?token=R38VYBN1AL)](https://codecov.io/gh/tchiunam/axolgo-cli)
 [![CodeQL](https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tchiunam/axolgo-cli)](https://goreportcard.com/report/github.com/tchiunam/axolgo-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 This is the CLI library of the Axolotl series in Golang. Command is 
