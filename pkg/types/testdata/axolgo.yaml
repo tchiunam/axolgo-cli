@@ -1,0 +1,7 @@
+logging:
+  log-level-verbosity: 0
+aws:
+  region: ap-east-1
+gcp:
+  google-application-credentials: ~/.gcp_credentials
+  zone: asia-east1-a

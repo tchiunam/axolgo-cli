@@ -2,10 +2,15 @@
 
 # axolgo-cli, the Axolotl CLI Library in Golang
 [![Go](https://github.com/tchiunam/axolgo-cli/actions/workflows/go.yml/badge.svg)](https://github.com/tchiunam/axolgo-cli/actions/workflows/go.yml)
-[![Version](https://img.shields.io/badge/Version-v0.0.3-yellow.svg)](https://github.com/tchiunam/axolgo-cli/releases/tag/v0.0.3)
+[![Version](https://img.shields.io/github/v/release/tchiunam/axolgo-cli?sort=semver)](https://github.com/tchiunam/axolgo-cli/releases)
 [![codecov](https://codecov.io/gh/tchiunam/axolgo-cli/branch/main/graph/badge.svg?token=R38VYBN1AL)](https://codecov.io/gh/tchiunam/axolgo-cli)
 [![CodeQL](https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tchiunam/axolgo-cli)](https://goreportcard.com/report/github.com/tchiunam/axolgo-cli)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/tchiunam/axolgo-cli)](https://pkg.go.dev/github.com/tchiunam/axolgo-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli.svg?type=shield)](https://app.fossa.com/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli?ref=badge_shield)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/tchiunam/axolgo-cli)](https://github.com/tchiunam/axolgo-cli)
+[![Repository Size](https://img.shields.io/github/repo-size/tchiunam/axolgo-cli.svg?label=Repo%20size)](https://github.com/tchiunam/axolgo-cli)
 
 This is the CLI library of the Axolotl series in Golang. Command is 
 designed to fit daily operational usage and the sub-command is 
@@ -53,6 +58,17 @@ go install github.com/tchiunam/axolgo-cli@v1.2.3
 
 See 'go help install' or https://golang.org/ref/mod#go-install for details.
 
+## Run test
+To run test:
+```
+go test ./...
+```
+
+To run test with coverage result:
+```
+go test -coverpkg=./... ./...
+```
+
 ## Examples
 ### AWS
 To update database cluster parameter group:
@@ -84,3 +100,6 @@ axolgo gcp compute listInstances --project proj1 --zone asia-east1-a --id 745206
 #### See more  
 1. [axolgo-lib](https://github.com/tchiunam/axolgo-lib) for the base library
 2. [axolgo-cloud](https://github.com/tchiunam/axolgo-cloud) for using cloud library (AWS SDK and GCP API)
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli.svg?type=large)](https://app.fossa.com/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli?ref=badge_large)
