@@ -23,28 +23,33 @@ THE SOFTWARE.
 package ec2
 
 import (
-	"context"
-	"os"
+	"testing"
 
-	"github.com/spf13/cobra"
+	"github.com/stretchr/testify/assert"
 )
 
-// NewEc2Cmd creates the `ec2` command
-func NewEc2Cmd(ctx *context.Context) *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "ec2",
-		Short: "A set of EC2 commands.",
-		Long:  "A set of EC2 commands.",
-		Run: func(cmd *cobra.Command, _ []string) {
-			cmd.Help()
-			os.Exit(1)
+// TestNewCmdDescribeInstances tests the NewCmdDescribeInstances function
+// to make sure it returns a valid command.
+func TestNewCmdDescribeInstances(t *testing.T) {
+	cases := map[string]struct {
+		use      string
+		short    string
+		hasFlags bool
+	}{
+		"valid command": {
+			use:      "describeInstances [-i] [-a] [-b] [-s] [-m] [-r]",
+			short:    "Describe EC2 instances.",
+			hasFlags: true,
 		},
 	}
 
-	cmd.AddCommand(NewCmdDescribeInstances(ctx))
-
-	return cmd
-}
-
-func init() {
+	// Run the test cases
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			cmd := NewCmdDescribeInstances(nil)
+			assert.Equal(t, tc.use, cmd.Use)
+			assert.Equal(t, tc.short, cmd.Short)
+			assert.Equal(t, tc.hasFlags, cmd.Flags().HasFlags())
+		})
+	}
 }
