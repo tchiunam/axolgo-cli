@@ -1,17 +1,63 @@
 <img src="images/axolgo-logo-transparent.png" width="50%" />
 
 # axolgo-cli, the Axolotl CLI Library in Golang
-[![Go](https://github.com/tchiunam/axolgo-cli/actions/workflows/go.yml/badge.svg)](https://github.com/tchiunam/axolgo-cli/actions/workflows/go.yml)
-[![Version](https://img.shields.io/github/v/release/tchiunam/axolgo-cli?sort=semver)](https://github.com/tchiunam/axolgo-cli/releases)
-[![codecov](https://codecov.io/gh/tchiunam/axolgo-cli/branch/main/graph/badge.svg?token=R38VYBN1AL)](https://codecov.io/gh/tchiunam/axolgo-cli)
-[![CodeQL](https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/tchiunam/axolgo-cli)](https://goreportcard.com/report/github.com/tchiunam/axolgo-cli)
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/tchiunam/axolgo-cli)](https://pkg.go.dev/github.com/tchiunam/axolgo-cli)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli.svg?type=shield)](https://app.fossa.com/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli?ref=badge_shield)
-[![Go Version](https://img.shields.io/github/go-mod/go-version/tchiunam/axolgo-cli)](https://github.com/tchiunam/axolgo-cli)
-[![Repository Size](https://img.shields.io/github/repo-size/tchiunam/axolgo-cli.svg?label=Repo%20size)](https://github.com/tchiunam/axolgo-cli)
+#### Release
+<div align="left">
+  <a href="https://github.com/tchiunam/axolgo-cli/releases">
+    <img alt="Version" src="https://img.shields.io/github/v/release/tchiunam/axolgo-cli?sort=semver" />
+  </a>
+  <a href="https://github.com/tchiunam/axolgo-cli/releases">
+    <img alt="Release Date" src="https://img.shields.io/github/release-date/tchiunam/axolgo-cli" />
+  </a>
+  <a href="https://pkg.go.dev/github.com/tchiunam/axolgo-cli">
+    <img alt="PkgGoDev" src="https://pkg.go.dev/badge/github.com/tchiunam/axolgo-cli" />
+  </a>
+  <img alt="Go Version" src="https://img.shields.io/github/go-mod/go-version/tchiunam/axolgo-cli" />
+  <img alt="Language" src="https://img.shields.io/github/languages/count/tchiunam/axolgo-cli" />
+  <img alt="File Count" src="https://img.shields.io/github/directory-file-count/tchiunam/axolgo-cli" />
+  <img alt="Repository Size" src="https://img.shields.io/github/repo-size/tchiunam/axolgo-cli.svg?label=Repo%20size" />
+</div>
 
+#### Code Quality
+<div align="left">
+  <a href="https://github.com/tchiunam/axolgo-cli/actions/workflows/go.yml">
+    <img alt="Go" src="https://github.com/tchiunam/axolgo-cli/actions/workflows/go.yml/badge.svg" />
+  </a>
+  <a href="https://codecov.io/gh/tchiunam/axolgo-cli">
+    <img alt="codecov" src="https://codecov.io/gh/tchiunam/axolgo-cli/branch/main/graph/badge.svg?token=R38VYBN1AL" />
+  </a>
+  <a href="https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml">
+    <img alt="CodeQL" src="https://github.com/tchiunam/axolgo-cli/actions/workflows/codeql-analysis.yml/badge.svg" />
+  </a>
+  <a href="https://goreportcard.com/report/github.com/tchiunam/axolgo-cli">
+    <img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/tchiunam/axolgo-cli" />
+  </a>
+</div>
+
+#### Activity
+<div align="left">
+  <a href="https://github.com/tchiunam/axolgo-cli/commits/main">
+    <img alt="Last Commit" src="https://img.shields.io/github/last-commit/tchiunam/axolgo-cli" />
+  </a>
+  <a href="https://github.com/tchiunam/axolgo-cli/issues?q=is%3Aissue+is%3Aclosed">
+    <img alt="Closed Issues" src="https://img.shields.io/github/issues-closed/tchiunam/axolgo-cli" />
+  </a>
+  <a href="https://github.com/tchiunam/axolgo-cli/pulls?q=is%3Apr+is%3Aclosed">
+    <img alt="Closed Pull Requests" src="https://img.shields.io/github/issues-pr-closed/tchiunam/axolgo-cli" />
+  </a>
+</div>
+
+#### License
+<div align="left">
+  <a href="https://opensource.org/licenses/MIT">
+    <img alt="License: MIT" src="https://img.shields.io/github/license/tchiunam/axolgo-cli" />
+  </a>
+  <a href="https://app.fossa.com/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli?ref=badge_shield">
+    <img alt="FOSSA Status" src="https://app.fossa.com/api/projects/custom%2B32310%2Fgithub.com%2Ftchiunam%2Faxolgo-cli.svg?type=shield" />
+  </a>
+</div>
+
+<br />
 This is the CLI library of the Axolotl series in Golang. Command is 
 designed to fit daily operational usage and the sub-command is 
 added for better experience. You may configure **axolgo** through 
