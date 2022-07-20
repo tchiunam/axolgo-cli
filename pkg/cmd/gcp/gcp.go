@@ -36,7 +36,7 @@ func NewGCPCmd(ctx *context.Context) *cobra.Command {
 		Use:   "gcp",
 		Short: "A set of GCP commands",
 		Long:  "A set of GCP commands",
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(cmd *cobra.Command, _ []string) {
 			cmd.Help()
 			os.Exit(1)
 		},

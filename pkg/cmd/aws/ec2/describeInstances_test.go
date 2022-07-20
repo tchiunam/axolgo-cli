@@ -43,7 +43,6 @@ func TestNewCmdDescribeInstances(t *testing.T) {
 		},
 	}
 
-	// Run the test cases
 	for name, tc := range cases {
 		t.Run(name, func(t *testing.T) {
 			cmd := NewCmdDescribeInstances(nil)

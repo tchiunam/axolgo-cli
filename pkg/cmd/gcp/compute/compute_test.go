@@ -20,36 +20,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package cmd
+package compute
 
 import (
-	"context"
-	"os"
+	"testing"
 
-	"github.com/spf13/cobra"
-	cmdec2 "github.com/tchiunam/axolgo-cli/pkg/cmd/aws/ec2"
-	cmdrds "github.com/tchiunam/axolgo-cli/pkg/cmd/aws/rds"
+	"github.com/stretchr/testify/assert"
 )
 
-// NewAWSCmd creates the `aws` command
-func NewAWSCmd(ctx *context.Context) *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "aws",
-		Short: "A set of AWS commands",
-		Long:  "A set of AWS commands",
-		Run: func(cmd *cobra.Command, _ []string) {
-			cmd.Help()
-			os.Exit(1)
+// TestNewComputeCmd tests the NewComputeCmd function
+func TestNewComputeCmd(t *testing.T) {
+	cases := map[string]struct {
+		use      string
+		short    string
+		long     string
+		commands int
+	}{
+		"valid command": {
+			use:      "compute",
+			short:    "A set of compute commands.",
+			long:     "A set of compute commands.",
+			commands: 1,
 		},
 	}
 
-	cmd.AddCommand(
-		cmdec2.NewEc2Cmd(ctx),
-		cmdrds.NewRdsCmd(ctx),
-	)
-
-	return cmd
-}
-
-func init() {
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			cmd := NewComputeCmd(nil)
+			assert.Equal(t, tc.use, cmd.Use)
+			assert.Equal(t, tc.short, cmd.Short)
+			assert.Equal(t, tc.long, cmd.Long)
+			assert.GreaterOrEqual(t, len(cmd.Commands()), tc.commands)
+		})
+	}
 }
