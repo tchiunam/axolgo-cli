@@ -94,7 +94,7 @@ func initConfig() {
 		os.Exit(1)
 	}
 
-	// Read mutliple sets of configuration file
+	// Read multiple sets of configuration file
 	for _, configSet := range []string{"aws", "gcp", "logging"} {
 		// Check if the config file exists
 		configName := "axolgo-" + configSet

@@ -40,8 +40,8 @@ import (
 )
 
 var (
-	listInstancesLong = `List compute engine instances which are filterd by
-given critera.
+	listInstancesLong = `List compute engine instances which are filtered by
+given criteria.
 `
 	listInstancesExample = `  # List comput engine instance
   axolgo gcp compute listInstances --project proj1 --zone asia-east1-a --id 7452065390813417482
