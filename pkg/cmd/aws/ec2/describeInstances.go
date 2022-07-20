@@ -42,8 +42,8 @@ import (
 )
 
 var (
-	describeInstancesLong = `Describe EC2 instances which are filterd by
-given critera.
+	describeInstancesLong = `Describe EC2 instances which are filtered by
+given criteria.
 `
 	describeInstancesExample = `  # Describe an EC2 instance
   axolgo aws ec2 describeInstances --instance-id i-831ao9b7co029d3ef
