@@ -35,7 +35,7 @@ func NewEc2Cmd(ctx *context.Context) *cobra.Command {
 		Use:   "ec2",
 		Short: "A set of EC2 commands.",
 		Long:  "A set of EC2 commands.",
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(cmd *cobra.Command, _ []string) {
 			cmd.Help()
 			os.Exit(1)
 		},
