@@ -39,7 +39,7 @@ func TestAxolgoConfig(t *testing.T) {
 		googleApplicationCredentials string
 		gcpZone                      string
 	}{
-		"nil input": {
+		"normal config file": {
 			configFilePath:               "./testdata",
 			logLevelverbosity:            0,
 			awsRegion:                    "ap-east-1",
