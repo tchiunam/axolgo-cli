@@ -32,6 +32,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	cmdaws "github.com/tchiunam/axolgo-cli/pkg/cmd/aws"
+	cmdcryptography "github.com/tchiunam/axolgo-cli/pkg/cmd/cryptography"
 	cmdgcp "github.com/tchiunam/axolgo-cli/pkg/cmd/gcp"
 	"github.com/tchiunam/axolgo-cli/pkg/types"
 	"k8s.io/klog/v2"
@@ -94,7 +95,7 @@ func initConfig() {
 		os.Exit(1)
 	}
 
-	// Read mutliple sets of configuration file
+	// Read multiple sets of configuration file
 	for _, configSet := range []string{"aws", "gcp", "logging"} {
 		// Check if the config file exists
 		configName := "axolgo-" + configSet
@@ -130,5 +131,6 @@ func initConfig() {
 
 func configureCommandStructure(ctx *context.Context) {
 	rootCmd.AddCommand(cmdaws.NewAWSCmd(ctx))
+	rootCmd.AddCommand(cmdcryptography.NewCryptographyCmd(ctx))
 	rootCmd.AddCommand(cmdgcp.NewGCPCmd(ctx))
 }
