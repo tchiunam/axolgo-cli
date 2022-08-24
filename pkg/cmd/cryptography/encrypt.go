@@ -83,7 +83,7 @@ func (o *EncryptOptions) complete(_ *context.Context, _ *cobra.Command, args []s
 		return err
 	}
 	data, err := cryptography.Encrypt([]byte(o.Message), string(content))
-	fmt.Printf(hex.EncodeToString(data))
+	fmt.Println(hex.EncodeToString(data))
 
 	return nil
 }
