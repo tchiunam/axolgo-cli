@@ -142,6 +142,10 @@ To list compute engine instances with the given ID:
 axolgo gcp compute listInstances --project proj1 --zone asia-east1-a --id 7452065390813417482
 ```
 
+## Test report
+## Code Coverage graph
+![Code Coverage graph](https://codecov.io/gh/tchiunam/axolgo-cli/branch/main/graphs/tree.svg?token=R38VYBN1AL)
+
 ---
 #### See more  
 1. [axolgo-lib](https://github.com/tchiunam/axolgo-lib) for the base library
