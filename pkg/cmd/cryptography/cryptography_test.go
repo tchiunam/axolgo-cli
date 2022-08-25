@@ -44,13 +44,13 @@ func TestNewCryptographyCmd(t *testing.T) {
 		},
 	}
 
-	for name, tc := range cases {
+	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {
 			cmd := NewCryptographyCmd(nil)
-			assert.Equal(t, tc.use, cmd.Use)
-			assert.Equal(t, tc.short, cmd.Short)
-			assert.Equal(t, tc.long, cmd.Long)
-			assert.GreaterOrEqual(t, len(cmd.Commands()), tc.commands)
+			assert.Equal(t, c.use, cmd.Use)
+			assert.Equal(t, c.short, cmd.Short)
+			assert.Equal(t, c.long, cmd.Long)
+			assert.GreaterOrEqual(t, len(cmd.Commands()), c.commands)
 		})
 	}
 }
