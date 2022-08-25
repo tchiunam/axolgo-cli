@@ -66,7 +66,7 @@ func init() {
 
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFilePath, "config-file-path", "./config", "config file path (default is $HOME)")
+	rootCmd.PersistentFlags().StringVar(&cfgFilePath, "AXOLGO_CONFIG_PATH", "", "Axolgo config file path. If empty, environment variable AXOLGO_CONFIG_PATH is used. Otherwise, default is ./config.")
 
 	// A context for configuration to be shared by all commands
 	ctx := context.WithValue(context.Background(), "rootcmd-init-time", time.Now())
@@ -78,10 +78,15 @@ func initConfig() {
 	if err := viper.BindPFlags(rootCmd.Flags()); err != nil {
 		klog.Errorf("Failed to bind flags to viper: %v", err)
 	}
-	// Use config file path from the flag
-	viper.AddConfigPath(cfgFilePath)
-
 	viper.AutomaticEnv() // read in environment variables that match
+
+	// Use config file path from the flag
+	if cfgFilePath == "" {
+		if cfgFilePath = viper.GetString("AXOLGO_CONFIG_PATH"); cfgFilePath == "" {
+			cfgFilePath = "./config"
+		}
+	}
+	viper.AddConfigPath(cfgFilePath)
 
 	viper.SetConfigType("yaml")
 	viper.SetConfigName("axolgo")
