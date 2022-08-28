@@ -84,7 +84,7 @@ func (o *DecryptOptions) complete(_ *context.Context, _ *cobra.Command, args []s
 	}
 	if message, err := hex.DecodeString(o.Message); err == nil {
 		if data, err := cryptography.Decrypt([]byte(message), string(content)); err == nil {
-			fmt.Printf(string(data))
+			fmt.Println(string(data))
 		} else {
 			klog.Errorf("Failed to decrypt message: %s", o.Message)
 			return err
