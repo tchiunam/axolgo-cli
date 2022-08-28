@@ -67,17 +67,17 @@ Go package: https://pkg.go.dev/github.com/tchiunam/axolgo-cli
 
 ## Use it with your Go module
 To add as dependency for your package or upgrade to the latest version:
-```
+```console
 go get github.com/tchiunam/axolgo-cli
 ```
 
 To upgrade or downgrade to a specific version:
-```
+```console
 go get github.com/tchiunam/axolgo-cli@v1.2.3
 ```
 
 To remove dependency on your module and downgrade modules:
-```
+```console
 go get github.com/tchiunam/axolgo-cli@none
 ```
 
@@ -85,7 +85,7 @@ See 'go help get' or https://golang.org/ref/mod#go-get for details.
 
 ## Build
 Download the source and run:
-```
+```console
 go build -o axolgo
 ```
 
@@ -93,12 +93,12 @@ See 'go help build' or https://golang.org/ref/mod#go-build for details.
 
 ## Install
 To install latest version:
-```
+```console
 go install github.com/tchiunam/axolgo-cli@latest
 ```
 
 To build and install version in module-aware mode:
-```
+```console
 go install github.com/tchiunam/axolgo-cli@v1.2.3
 ```
 
@@ -106,41 +106,53 @@ See 'go help install' or https://golang.org/ref/mod#go-install for details.
 
 ## Run test
 To run test:
-```
+```console
 go test ./...
 ```
 
 To run test with coverage result:
-```
+```console
 go test -coverpkg=./... ./...
 ```
 
 ## Examples
 ### AWS
 To update database cluster parameter group:
-```
+```console
 axolgo aws rds modifyDBClusterParameterGroup --name <parameter_group_name> --parameter-file <yaml_file_containing_parameters>
 ```
 
 To describe EC2 instances with given Instance IDs:
-```
+```console
 axolgo aws ec2 describeInstances --instance-id <instance_id> --instance-id <instance_id>
 ```
 
 To describe EC2 instances with given Private IP Addresses:
-```
+```console
 axolgo aws ec2 describeInstances --private-ip-address 127.0.0.1 --private-ip-address 127.0.0.2
 ```
 ### GCP
 To list all compute engine instances in a zone:
-```
+```console
 axolgo gcp compute listInstances --project proj1 --zone asia-east1-a
 ```
 
 To list compute engine instances with the given ID:
-```
+```console
 axolgo gcp compute listInstances --project proj1 --zone asia-east1-a --id 7452065390813417482
 ```
+
+### Cryptography
+To encrypt a message:
+```console
+axolgo cryptography encrypt --key-file secret.key --message "Galaxy is a big space where there are many planets and stars."
+```
+
+To decrypt a message:
+```console
+axolgo cryptography decrypt --key-file secret.key --message 5602259f17f41c7a1289d26c4cc540bdfe939a93d4f01f4f6830739f2488c04e7875890280d966a3509217b73e290c2bcdbbf2b8676395bd87ae000dcac8343ac3cf3e389968e185f96810302947ea6809d62dfee404e318d2
+```
+
 
 ## Test report
 ## Code Coverage graph
