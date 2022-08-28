@@ -27,7 +27,9 @@ import (
 	"encoding/hex"
 	"fmt"
 	"os"
+	"syscall"
 
+	"golang.org/x/term"
 	"k8s.io/klog/v2"
 
 	"github.com/spf13/cobra"
@@ -68,7 +70,6 @@ func NewCmdDecrypt(ctx *context.Context) *cobra.Command {
 	cmd.Flags().StringVarP(&o.KeyFile, "key-file", "k", "", "Key file.")
 	cmd.Flags().StringVarP(&o.Message, "message", "m", "", "Message to be decrypted.")
 
-	cmd.MarkFlagRequired("key-file")
 	cmd.MarkFlagRequired("message")
 
 	return cmd
@@ -77,13 +78,25 @@ func NewCmdDecrypt(ctx *context.Context) *cobra.Command {
 
 // Complete takes the command arguments and execute.
 func (o *DecryptOptions) complete(_ *context.Context, _ *cobra.Command, args []string) error {
-	content, err := os.ReadFile(o.KeyFile)
-	if err != nil {
-		klog.Errorf("Failed to read key file: %s", o.KeyFile)
-		return err
+	var passphrase []byte
+	var err error
+	if o.KeyFile == "" {
+		fmt.Print("Enter passphrase: ")
+		if passphrase, err = term.ReadPassword(int(syscall.Stdin)); err != nil {
+			klog.Errorf("Failed to read passphrase from stdin: %v", err)
+			return err
+		}
+		fmt.Println()
+	} else {
+		passphrase, err = os.ReadFile(o.KeyFile)
+		if err != nil {
+			klog.Errorf("Failed to read key file: %s", o.KeyFile)
+			return err
+		}
 	}
+
 	if message, err := hex.DecodeString(o.Message); err == nil {
-		if data, err := cryptography.Decrypt([]byte(message), string(content)); err == nil {
+		if data, err := cryptography.Decrypt([]byte(message), string(passphrase)); err == nil {
 			fmt.Println(string(data))
 		} else {
 			klog.Errorf("Failed to decrypt message: %s", o.Message)
