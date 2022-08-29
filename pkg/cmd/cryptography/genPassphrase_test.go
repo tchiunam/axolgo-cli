@@ -23,34 +23,49 @@ THE SOFTWARE.
 package cryptography
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-// TestNewCryptographyCmd tests the NewCryptographyCmd function
-func TestNewCryptographyCmd(t *testing.T) {
+// TestNewCmdGenPassphrase tests the NewCmdEncrypt function
+// to make sure it returns a valid command.
+func TestNewCmdGenPassphrase(t *testing.T) {
 	cases := map[string]struct {
 		use      string
 		short    string
-		long     string
-		commands int
+		hasFlags bool
+		saveFile string
 	}{
-		"valid command": {
-			use:      "cryptography",
-			short:    "Cryptography utilities for securing the resources you manage",
-			long:     "There are many cryptography implementations we can choose. This is a set of utilities that picked the useful ones and is designed to help you focus on your business requirements.",
-			commands: 2,
+		"save file": {
+			use:      "genPassphrase [-s]",
+			short:    "Generate a passphrase.",
+			hasFlags: true,
+			saveFile: filepath.Join("testdata", "secret-new.key"),
 		},
 	}
 
+	os.Setenv("AXOLGO_CONFIG_PATH", filepath.Join(filepath.Dir(""), "..", "..", "testdata", "config"))
+
 	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {
-			cmd := NewCryptographyCmd(nil)
+			oldArgs := os.Args
+			defer func() { os.Args = oldArgs }()
+			os.Args = []string{
+				"cmd",
+				"--save-file", c.saveFile}
+
+			cmd := NewCmdGenPassphrase(nil)
 			assert.Equal(t, c.use, cmd.Use)
 			assert.Equal(t, c.short, cmd.Short)
-			assert.Equal(t, c.long, cmd.Long)
-			assert.GreaterOrEqual(t, len(cmd.Commands()), c.commands)
+			assert.Equal(t, c.hasFlags, cmd.Flags().HasFlags())
+			assert.NoError(t, cmd.Execute())
+
+			if _, err := os.Stat(c.saveFile); err == nil {
+				os.Remove(c.saveFile)
+			}
 		})
 	}
 }

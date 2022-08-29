@@ -24,12 +24,8 @@ package cryptography
 
 import (
 	"context"
-	"encoding/hex"
-	"fmt"
 	"os"
-	"syscall"
 
-	"golang.org/x/term"
 	"k8s.io/klog/v2"
 
 	"github.com/spf13/cobra"
@@ -37,29 +33,28 @@ import (
 )
 
 var (
-	encryptLong = "Encrypt the provided string with a key."
+	genPassphraseLong = "Generate a passphrase."
 
-	encryptExample = `  # Encrypt the string "Hello World" with a key file.
-  axolgo crytography encrypt --key-file secret.key --message "Hello World"
+	genPassphraseExample = `  # Generate a passphrase."
+  axolgo crytography genPassphrase
 `
 )
 
-// EncryptOptions defines flags and other configuration parameters for the `encrypt` command
-type EncryptOptions struct {
-	KeyFile string
-	Message string
+// GenPassphraseOptions defines flags and other configuration parameters for the `genPassphrasencrypt` command
+type GenPassphraseOptions struct {
+	SaveFile string
 }
 
-// NewCmdEncrypt creates the `encrypt` command
-func NewCmdEncrypt(ctx *context.Context) *cobra.Command {
-	o := EncryptOptions{}
+// NewCmdGenPassphrase creates the `genPassphrase` command
+func NewCmdGenPassphrase(ctx *context.Context) *cobra.Command {
+	o := GenPassphraseOptions{}
 
 	cmd := &cobra.Command{
-		Use:                   "encrypt [-k] [-m]",
+		Use:                   "genPassphrase [-s]",
 		DisableFlagsInUseLine: true,
-		Short:                 "Encrypt a message.",
-		Long:                  encryptLong,
-		Example:               encryptExample,
+		Short:                 "Generate a passphrase.",
+		Long:                  genPassphraseLong,
+		Example:               genPassphraseExample,
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := o.complete(ctx, cmd, args); err != nil {
 				panic(err)
@@ -67,35 +62,25 @@ func NewCmdEncrypt(ctx *context.Context) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&o.KeyFile, "key-file", "k", "", "Key file.")
-	cmd.Flags().StringVarP(&o.Message, "message", "m", "", "Message to be encrypted.")
+	cmd.Flags().StringVarP(&o.SaveFile, "save-file", "s", "", "Save to a file.")
 
-	cmd.MarkFlagRequired("message")
+	cmd.MarkFlagRequired("save-file")
 
 	return cmd
 
 }
 
 // Complete takes the command arguments and execute.
-func (o *EncryptOptions) complete(_ *context.Context, _ *cobra.Command, args []string) error {
-	var passphrase []byte
-	var err error
-	if o.KeyFile == "" {
-		fmt.Print("Enter passphrase: ")
-		if passphrase, err = term.ReadPassword(int(syscall.Stdin)); err != nil {
-			klog.Errorf("Failed to read passphrase from stdin: %v", err)
+func (o *GenPassphraseOptions) complete(_ *context.Context, _ *cobra.Command, args []string) error {
+	if passphrase, err := cryptography.GeneratePassphrase(50); err == nil {
+		if err = os.WriteFile(o.SaveFile, []byte(passphrase), 0644); err != nil {
+			klog.Errorf("Failed to write passphrase into file: %s", o.SaveFile)
 			return err
 		}
-		fmt.Println()
 	} else {
-		passphrase, err = os.ReadFile(o.KeyFile)
-		if err != nil {
-			klog.Errorf("Failed to read key file: %s", o.KeyFile)
-			return err
-		}
+		klog.Errorf("Failed to generate passphrase: %s", err)
+		return err
 	}
-	data, err := cryptography.Encrypt([]byte(o.Message), string(passphrase))
-	fmt.Println(hex.EncodeToString(data))
 
 	return nil
 }

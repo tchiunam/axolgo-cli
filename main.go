@@ -26,3 +26,8 @@ import "github.com/tchiunam/axolgo-cli/pkg/cmd"
 func main() {
 	cmd.Execute()
 }
+
+// A wrapper for automated testing
+func MainWrapper() {
+	main()
+}

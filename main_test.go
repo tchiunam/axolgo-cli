@@ -20,7 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package cryptography
+package main
 
 import (
 	"testing"
@@ -28,29 +28,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestNewCryptographyCmd tests the NewCryptographyCmd function
-func TestNewCryptographyCmd(t *testing.T) {
-	cases := map[string]struct {
-		use      string
-		short    string
-		long     string
-		commands int
-	}{
-		"valid command": {
-			use:      "cryptography",
-			short:    "Cryptography utilities for securing the resources you manage",
-			long:     "There are many cryptography implementations we can choose. This is a set of utilities that picked the useful ones and is designed to help you focus on your business requirements.",
-			commands: 2,
-		},
-	}
-
-	for name, c := range cases {
-		t.Run(name, func(t *testing.T) {
-			cmd := NewCryptographyCmd(nil)
-			assert.Equal(t, c.use, cmd.Use)
-			assert.Equal(t, c.short, cmd.Short)
-			assert.Equal(t, c.long, cmd.Long)
-			assert.GreaterOrEqual(t, len(cmd.Commands()), c.commands)
-		})
-	}
+func TestMain(t *testing.T) {
+	t.Run("call main", func(t *testing.T) {
+		assert.NotPanics(t, MainWrapper)
+	})
 }

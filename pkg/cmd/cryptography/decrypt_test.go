@@ -45,7 +45,7 @@ func TestNewCmdDecrypt(t *testing.T) {
 			short:    "Decrypt a message.",
 			hasFlags: true,
 			keyFile:  filepath.Join("testdata", "secret-test.key"),
-			message:  "a793ca5fc2eeb8b2c30cee2dd758ecb6663f4c84dde3912237fcddb346eb5f49e19f26472913f16ff6f8d1b220cba8d628a00c3ac6a57b294c2b440aad2276f52a8e62128adb7909",
+			message:  "e4b433b2b2cc8d95e9859d1c66a338254a03316d95631f4d4af9d977a37c2776e8ed914486f67e",
 		},
 	}
 
