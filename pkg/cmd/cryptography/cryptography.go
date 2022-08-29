@@ -34,7 +34,7 @@ func NewCryptographyCmd(ctx *context.Context) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "cryptography",
 		Short: "Cryptography utilities for securing the resources you manage",
-		Long:  "There are many cryptography implementation in the world. This is a set of utilities that is designed to help you focus on your business requirements.",
+		Long:  "There are many cryptography implementations we can choose. This is a set of utilities that picked the useful ones and is designed to help you focus on your business requirements.",
 		Run: func(cmd *cobra.Command, _ []string) {
 			cmd.Help()
 			os.Exit(1)
@@ -44,6 +44,7 @@ func NewCryptographyCmd(ctx *context.Context) *cobra.Command {
 	cmd.AddCommand(
 		NewCmdEncrypt(ctx),
 		NewCmdDecrypt(ctx),
+		NewCmdGenPassphrase(ctx),
 	)
 
 	return cmd
