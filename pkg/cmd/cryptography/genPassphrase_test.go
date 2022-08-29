@@ -39,12 +39,6 @@ func TestNewCmdGenPassphrase(t *testing.T) {
 		hasFlags bool
 		saveFile string
 	}{
-		"no save file": {
-			use:      "genPassphrase [-s]",
-			short:    "Generate a passphrase.",
-			hasFlags: true,
-			saveFile: "",
-		},
 		"save file": {
 			use:      "genPassphrase [-s]",
 			short:    "Generate a passphrase.",
