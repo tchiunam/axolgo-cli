@@ -23,6 +23,8 @@ THE SOFTWARE.
 package ec2
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -32,23 +34,34 @@ import (
 // to make sure it returns a valid command.
 func TestNewCmdDescribeInstances(t *testing.T) {
 	cases := map[string]struct {
-		use      string
-		short    string
-		hasFlags bool
+		use        string
+		short      string
+		hasFlags   bool
+		instanceId string
 	}{
 		"valid command": {
-			use:      "describeInstances [-i] [-a] [-b] [-s] [-m] [-r]",
-			short:    "Describe EC2 instances.",
-			hasFlags: true,
+			use:        "describeInstances [-i] [-a] [-b] [-s] [-m] [-r]",
+			short:      "Describe EC2 instances.",
+			hasFlags:   true,
+			instanceId: "i-1234567890abcdef0",
 		},
 	}
 
-	for name, tc := range cases {
+	os.Setenv("AXOLGO_CONFIG_PATH", filepath.Join(filepath.Dir(""), "..", "..", "..", "testdata", "config"))
+
+	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {
+			oldArgs := os.Args
+			defer func() { os.Args = oldArgs }()
+			os.Args = []string{
+				"cmd",
+				"--instance-id", c.instanceId}
+
 			cmd := NewCmdDescribeInstances(nil)
-			assert.Equal(t, tc.use, cmd.Use)
-			assert.Equal(t, tc.short, cmd.Short)
-			assert.Equal(t, tc.hasFlags, cmd.Flags().HasFlags())
+			assert.Equal(t, c.use, cmd.Use)
+			assert.Equal(t, c.short, cmd.Short)
+			assert.Equal(t, c.hasFlags, cmd.Flags().HasFlags())
+			assert.NoError(t, cmd.Execute())
 		})
 	}
 }
