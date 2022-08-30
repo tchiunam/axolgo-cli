@@ -1,0 +1,4 @@
+static:
+  pglogical.batch_inserts: 1
+dynamic:
+  tcp_keepalives_interval: 300
