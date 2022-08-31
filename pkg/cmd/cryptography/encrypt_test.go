@@ -28,7 +28,13 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/tchiunam/axolgo-cli/pkg/util"
 )
+
+// Initialize environment for the tests
+func init() {
+	util.InitAxolgoConfig(filepath.Join(filepath.Dir(""), "..", "..", "testdata", "config"))
+}
 
 // TestNewCmdEncrypt tests the NewCmdEncrypt function
 // to make sure it returns a valid command.
@@ -48,8 +54,6 @@ func TestNewCmdEncrypt(t *testing.T) {
 			message:  "Hello World",
 		},
 	}
-
-	os.Setenv("AXOLGO_CONFIG_PATH", filepath.Join(filepath.Dir(""), "..", "..", "testdata", "config"))
 
 	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {
@@ -84,8 +88,6 @@ func TestNewCmdEncryptInvalid(t *testing.T) {
 			message: "Hello World",
 		},
 	}
-
-	os.Setenv("AXOLGO_CONFIG_PATH", filepath.Join(filepath.Dir(""), "..", "..", "testdata", "config"))
 
 	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {

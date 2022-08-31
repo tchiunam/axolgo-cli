@@ -28,7 +28,13 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/tchiunam/axolgo-cli/pkg/util"
 )
+
+// Initialize environment for the tests
+func init() {
+	util.InitAxolgoConfig(filepath.Join(filepath.Dir(""), "..", "..", "..", "testdata", "config"))
+}
 
 // TestNewCmdModifyDBClusterParameterGroup tests the NewCmdModifyDBClusterParameterGroup function
 // to make sure it returns a valid command.
@@ -48,8 +54,6 @@ func TestNewCmdModifyDBClusterParameterGroup(t *testing.T) {
 			parameterFile: filepath.Join("testdata", "db_parameters.yaml"),
 		},
 	}
-
-	os.Setenv("AXOLGO_CONFIG_PATH", filepath.Join(filepath.Dir(""), "..", "..", "..", "testdata", "config"))
 
 	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {
@@ -88,8 +92,6 @@ func TestNewCmdModifyDBClusterParameterGroupInvalid(t *testing.T) {
 			parameterFile: filepath.Join("testdata", "missing.yaml"),
 		},
 	}
-
-	os.Setenv("AXOLGO_CONFIG_PATH", filepath.Join(filepath.Dir(""), "..", "..", "..", "testdata", "config"))
 
 	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {
