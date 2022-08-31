@@ -28,7 +28,13 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/tchiunam/axolgo-cli/pkg/util"
 )
+
+// Initialize environment for the tests
+func init() {
+	util.InitAxolgoConfig(filepath.Join(filepath.Dir(""), "..", "..", "..", "testdata", "config"))
+}
 
 // TestNewCmdDescribeInstances tests the NewCmdDescribeInstances function
 // to make sure it returns a valid command.
@@ -46,8 +52,6 @@ func TestNewCmdDescribeInstances(t *testing.T) {
 			instanceId: "i-1234567890abcdef0",
 		},
 	}
-
-	os.Setenv("AXOLGO_CONFIG_PATH", filepath.Join(filepath.Dir(""), "..", "..", "..", "testdata", "config"))
 
 	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {
