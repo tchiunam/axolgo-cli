@@ -20,42 +20,39 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package ec2
+package util
 
 import (
+	"os"
 	"path/filepath"
 	"testing"
 
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
-	"github.com/tchiunam/axolgo-cli/pkg/util"
+	"github.com/tchiunam/axolgo-cli/pkg/types"
 )
 
-// Initialize environment for the tests
-func init() {
-	util.InitAxolgoConfig(filepath.Join(filepath.Dir(""), "..", "..", "..", "testdata", "config"))
-}
+// TestInitAxolgoConfig calls InitAxolgoConfig to make sure it initialize a valid configuration.
+func TestInitAxolgoConfig(t *testing.T) {
+	cfgFilePath := filepath.Join(filepath.Dir(""), "..", "testdata", "config")
 
-// TestNewCmdDescribeInstances tests the NewCmdDescribeInstances function
-// to make sure it returns a valid command.
-func TestNewCmdDescribeInstances(t *testing.T) {
-	cases := map[string]struct {
-		use      string
-		short    string
-		hasFlags bool
-	}{
-		"valid command": {
-			use:      "describeInstances [-i] [-a] [-b] [-s] [-m] [-r]",
-			short:    "Describe EC2 instances.",
-			hasFlags: true,
-		},
-	}
+	oldArgs := os.Args
+	defer func() { os.Args = oldArgs }()
+	os.Args = []string{
+		"cmd",
+		"-v", "3"}
 
-	for name, c := range cases {
-		t.Run(name, func(t *testing.T) {
-			cmd := NewCmdDescribeInstances(nil)
-			assert.Equal(t, c.use, cmd.Use)
-			assert.Equal(t, c.short, cmd.Short)
-			assert.Equal(t, c.hasFlags, cmd.Flags().HasFlags())
-		})
-	}
+	t.Run("init with parameter", func(t *testing.T) {
+		assert.NotPanics(t, func() { InitAxolgoConfig(cfgFilePath) })
+	})
+
+	os.Setenv("AXOLGO_CONFIG_PATH", cfgFilePath)
+
+	axolgoConfig := viper.Get("axolgo-config").(types.AxolgoConfig)
+	axolgoConfig.Logging.LogLevelVerbosity = 3
+	viper.Set("axolgo-config", axolgoConfig)
+
+	t.Run("init with environment variable", func(t *testing.T) {
+		assert.NotPanics(t, func() { InitAxolgoConfig("") })
+	})
 }

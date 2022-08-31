@@ -20,7 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package cryptography
+package rds
 
 import (
 	"os"
@@ -33,25 +33,25 @@ import (
 
 // Initialize environment for the tests
 func init() {
-	util.InitAxolgoConfig(filepath.Join(filepath.Dir(""), "..", "..", "testdata", "config"))
+	util.InitAxolgoConfig(filepath.Join(filepath.Dir(""), "..", "..", "..", "testdata", "config"))
 }
 
-// TestNewCmdEncrypt tests the NewCmdEncrypt function
+// TestNewCmdModifyDBClusterParameterGroup tests the NewCmdModifyDBClusterParameterGroup function
 // to make sure it returns a valid command.
-func TestNewCmdEncrypt(t *testing.T) {
+func TestNewCmdModifyDBClusterParameterGroup(t *testing.T) {
 	cases := map[string]struct {
-		use      string
-		short    string
-		hasFlags bool
-		keyFile  string
-		message  string
+		use           string
+		short         string
+		hasFlags      bool
+		name          string
+		parameterFile string
 	}{
-		"valid command": {
-			use:      "encrypt [-k] [-m]",
-			short:    "Encrypt a message.",
-			hasFlags: true,
-			keyFile:  filepath.Join("testdata", "secret-test.key"),
-			message:  "Hello World",
+		"valid input": {
+			use:           "modifyDBClusterParameterGroup -f FILENAME",
+			short:         "Modify DB Cluster Parameter Group.",
+			hasFlags:      true,
+			name:          "standard-group",
+			parameterFile: filepath.Join("testdata", "db_parameters.yaml"),
 		},
 	}
 
@@ -61,31 +61,35 @@ func TestNewCmdEncrypt(t *testing.T) {
 			defer func() { os.Args = oldArgs }()
 			os.Args = []string{
 				"cmd",
-				"--key-file", c.keyFile,
-				"--message", c.message}
+				"--name", c.name,
+				"--parameter-file", c.parameterFile}
 
-			cmd := NewCmdEncrypt(nil)
+			cmd := NewCmdModifyDBClusterParameterGroup(nil)
 			assert.Equal(t, c.use, cmd.Use)
 			assert.Equal(t, c.short, cmd.Short)
 			assert.Equal(t, c.hasFlags, cmd.Flags().HasFlags())
-			assert.NoError(t, cmd.Execute())
+			// Not testing the output because it is dependent on the AWS environment.
+			assert.Panics(t, func() { cmd.Execute() })
 		})
 	}
 }
 
-// TestNewCmdEncryptInvalid calls the NewCmdEncrypt function with an invalid
-// input and verifies that an error is returned.
-func TestNewCmdEncryptInvalid(t *testing.T) {
+// TestNewCmdModifyDBClusterParameterGroupInvalid calls the NewCmdModifyDBClusterParameterGroup function with invalid input and
+// makes sure it returns an error.
+func TestNewCmdModifyDBClusterParameterGroupInvalid(t *testing.T) {
 	cases := map[string]struct {
-		use      string
-		short    string
-		hasFlags bool
-		keyFile  string
-		message  string
+		use           string
+		short         string
+		hasFlags      bool
+		name          string
+		parameterFile string
 	}{
-		"non-exist key file": {
-			keyFile: filepath.Join("testdata", "missing.key"),
-			message: "Hello World",
+		"missing parameter file": {
+			use:           "modifyDBClusterParameterGroup -f FILENAME",
+			short:         "Modify DB Cluster Parameter Group.",
+			hasFlags:      true,
+			name:          "standard-group",
+			parameterFile: filepath.Join("testdata", "missing.yaml"),
 		},
 	}
 
@@ -95,10 +99,13 @@ func TestNewCmdEncryptInvalid(t *testing.T) {
 			defer func() { os.Args = oldArgs }()
 			os.Args = []string{
 				"cmd",
-				"--key-file", c.keyFile,
-				"--message", c.message}
+				"--name", c.name,
+				"--parameter-file", c.parameterFile}
 
-			cmd := NewCmdEncrypt(nil)
+			cmd := NewCmdModifyDBClusterParameterGroup(nil)
+			assert.Equal(t, c.use, cmd.Use)
+			assert.Equal(t, c.short, cmd.Short)
+			assert.Equal(t, c.hasFlags, cmd.Flags().HasFlags())
 			assert.Panics(t, func() { cmd.Execute() })
 		})
 	}

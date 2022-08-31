@@ -28,7 +28,13 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/tchiunam/axolgo-cli/pkg/util"
 )
+
+// Initialize environment for the tests
+func init() {
+	util.InitAxolgoConfig(filepath.Join(filepath.Dir(""), "..", "..", "testdata", "config"))
+}
 
 // TestNewCmdDecrypt tests the NewCmdDecrypt function
 // to make sure it returns a valid command.
@@ -48,8 +54,6 @@ func TestNewCmdDecrypt(t *testing.T) {
 			message:  "e4b433b2b2cc8d95e9859d1c66a338254a03316d95631f4d4af9d977a37c2776e8ed914486f67e",
 		},
 	}
-
-	os.Setenv("AXOLGO_CONFIG_PATH", filepath.Join(filepath.Dir(""), "..", "..", "testdata", "config"))
 
 	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {
@@ -88,8 +92,6 @@ func TestNewCmdDecryptInvalid(t *testing.T) {
 			message: "123455",
 		},
 	}
-
-	os.Setenv("AXOLGO_CONFIG_PATH", filepath.Join(filepath.Dir(""), "..", "..", "testdata", "config"))
 
 	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {
