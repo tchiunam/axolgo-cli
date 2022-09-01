@@ -47,7 +47,7 @@ func TestNewCmdEncrypt(t *testing.T) {
 		message  string
 	}{
 		"valid command": {
-			use:      "encrypt [-k] -m MESSAGE",
+			use:      "encrypt [-k] [-m]",
 			short:    "Encrypt a message.",
 			hasFlags: true,
 			keyFile:  filepath.Join("testdata", "secret-test.key"),
