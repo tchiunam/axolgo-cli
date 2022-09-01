@@ -53,7 +53,7 @@ dynamic:
 ==============================
 `
 	modifyDBClusterParameterGroupExample = `  # Modify by providing a parameter file
-  axolgo aws rds modifyDBClusterParameterGroup -f parameters.yaml
+  axolgo aws rds modifyDBClusterParameterGroup -n standard_group -f parameters.yaml
 `
 )
 
@@ -68,7 +68,7 @@ func NewCmdModifyDBClusterParameterGroup(ctx *context.Context) *cobra.Command {
 	o := ModifyDBClusterParameterGroupOptions{}
 
 	cmd := &cobra.Command{
-		Use:                   "modifyDBClusterParameterGroup -f FILENAME",
+		Use:                   "modifyDBClusterParameterGroup -n NAME -f FILENAME",
 		DisableFlagsInUseLine: true,
 		Short:                 "Modify DB Cluster Parameter Group.",
 		Long:                  modifyDBClusterParameterGroupLong,

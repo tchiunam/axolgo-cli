@@ -47,7 +47,7 @@ func TestNewCmdDecrypt(t *testing.T) {
 		message  string
 	}{
 		"valid command": {
-			use:      "decrypt [-k] [-m]",
+			use:      "decrypt [-k] -m MESSAGE",
 			short:    "Decrypt a message.",
 			hasFlags: true,
 			keyFile:  filepath.Join("testdata", "secret-test.key"),

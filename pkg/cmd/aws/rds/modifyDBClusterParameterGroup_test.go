@@ -47,7 +47,7 @@ func TestNewCmdModifyDBClusterParameterGroup(t *testing.T) {
 		parameterFile string
 	}{
 		"valid input": {
-			use:           "modifyDBClusterParameterGroup -f FILENAME",
+			use:           "modifyDBClusterParameterGroup -n NAME -f FILENAME",
 			short:         "Modify DB Cluster Parameter Group.",
 			hasFlags:      true,
 			name:          "standard-group",
@@ -85,7 +85,7 @@ func TestNewCmdModifyDBClusterParameterGroupInvalid(t *testing.T) {
 		parameterFile string
 	}{
 		"missing parameter file": {
-			use:           "modifyDBClusterParameterGroup -f FILENAME",
+			use:           "modifyDBClusterParameterGroup -n NAME -f FILENAME",
 			short:         "Modify DB Cluster Parameter Group.",
 			hasFlags:      true,
 			name:          "standard-group",
