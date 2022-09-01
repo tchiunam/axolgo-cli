@@ -67,7 +67,6 @@ func NewCmdGenPassphrase(ctx *context.Context) *cobra.Command {
 	cmd.MarkFlagRequired("save-file")
 
 	return cmd
-
 }
 
 // Complete takes the command arguments and execute.
