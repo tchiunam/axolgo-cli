@@ -55,7 +55,7 @@ func NewCmdDecrypt(ctx *context.Context) *cobra.Command {
 	o := DecryptOptions{}
 
 	cmd := &cobra.Command{
-		Use:                   "decrypt [-k] [-m]",
+		Use:                   "decrypt [-k] -m MESSAGE",
 		DisableFlagsInUseLine: true,
 		Short:                 "Decrypt a message.",
 		Long:                  decryptLong,

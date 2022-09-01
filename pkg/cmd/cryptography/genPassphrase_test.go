@@ -46,7 +46,7 @@ func TestNewCmdGenPassphrase(t *testing.T) {
 		saveFile string
 	}{
 		"save file": {
-			use:      "genPassphrase [-s]",
+			use:      "genPassphrase -s FILE",
 			short:    "Generate a passphrase.",
 			hasFlags: true,
 			saveFile: filepath.Join("testdata", "secret-new.key"),

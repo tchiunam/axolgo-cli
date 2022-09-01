@@ -47,7 +47,7 @@ func TestNewCmdModifyDBParameterGroup(t *testing.T) {
 		parameterFile string
 	}{
 		"valid input": {
-			use:           "modifyDBParameterGroup -f FILENAME",
+			use:           "modifyDBParameterGroup -n NAME -f FILENAME",
 			short:         "Modify DB Parameter Group.",
 			hasFlags:      true,
 			name:          "standard-group",
@@ -85,7 +85,7 @@ func TestNewCmdModifyDBParameterGroupInvalid(t *testing.T) {
 		parameterFile string
 	}{
 		"missing parameter file": {
-			use:           "modifyDBParameterGroup -f FILENAME",
+			use:           "modifyDBParameterGroup -n NAME -f FILENAME",
 			short:         "Modify DB Parameter Group.",
 			hasFlags:      true,
 			name:          "standard-group",

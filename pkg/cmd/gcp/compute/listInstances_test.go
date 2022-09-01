@@ -37,7 +37,7 @@ func TestNewCmdListInstances(t *testing.T) {
 		hasFlags bool
 	}{
 		"valid command": {
-			use:      "listInstances -p [-z] [-i] [-n] [-r]",
+			use:      "listInstances -p PROJECT [-z] [-i] [-n] [-r]",
 			short:    "List compute engine instances.",
 			hasFlags: true,
 		},

@@ -55,7 +55,7 @@ func NewCmdEncrypt(ctx *context.Context) *cobra.Command {
 	o := EncryptOptions{}
 
 	cmd := &cobra.Command{
-		Use:                   "encrypt [-k] [-m]",
+		Use:                   "encrypt [-k] -m MESSAGE",
 		DisableFlagsInUseLine: true,
 		Short:                 "Encrypt a message.",
 		Long:                  encryptLong,
