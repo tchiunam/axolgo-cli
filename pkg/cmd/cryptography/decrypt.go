@@ -95,7 +95,7 @@ func (o *DecryptOptions) complete(_ *context.Context, _ *cobra.Command, args []s
 		}
 	}
 	if o.Message == "" {
-		fmt.Println("Enter message to be encrypted. Enter a new line and press Ctrl+D to finish:")
+		fmt.Println("Enter message to be decrypted. Enter a new line and press Ctrl+D to finish:")
 		scanner := bufio.NewScanner(os.Stdin)
 		input := make([]string, 0)
 		for scanner.Scan() {
