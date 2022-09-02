@@ -23,31 +23,34 @@ THE SOFTWARE.
 package rds
 
 import (
-	"context"
-	"os"
+	"testing"
 
-	"github.com/spf13/cobra"
+	"github.com/stretchr/testify/assert"
 )
 
-// NewRdsCmd creates the `rds` command
-func NewRdsCmd(ctx *context.Context) *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "rds",
-		Short: "A set of RDS commands.",
-		Long:  "A set of RDS commands.",
-		Run: func(cmd *cobra.Command, args []string) {
-			cmd.Help()
-			os.Exit(1)
+// TestNewRdsCmd tests the NewRdsCmd function
+func TestNewRdsCmd(t *testing.T) {
+	cases := map[string]struct {
+		use      string
+		short    string
+		long     string
+		commands int
+	}{
+		"valid command": {
+			use:      "rds",
+			short:    "A set of RDS commands.",
+			long:     "A set of RDS commands.",
+			commands: 2,
 		},
 	}
 
-	cmd.AddCommand(
-		NewCmdModifyDBParameterGroup(ctx),
-		NewCmdModifyDBClusterParameterGroup(ctx),
-	)
-
-	return cmd
-}
-
-func init() {
+	for name, c := range cases {
+		t.Run(name, func(t *testing.T) {
+			cmd := NewRdsCmd(nil)
+			assert.Equal(t, c.use, cmd.Use)
+			assert.Equal(t, c.short, cmd.Short)
+			assert.Equal(t, c.long, cmd.Long)
+			assert.GreaterOrEqual(t, len(cmd.Commands()), c.commands)
+		})
+	}
 }
