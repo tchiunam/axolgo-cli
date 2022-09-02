@@ -29,7 +29,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewEc2Cmd creates the `ec2` command
+// NewRdsCmd creates the `rds` command
 func NewRdsCmd(ctx *context.Context) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "rds",

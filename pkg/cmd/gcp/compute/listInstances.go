@@ -62,7 +62,7 @@ func NewCmdListInstances(ctx *context.Context) *cobra.Command {
 	o := ListInstancesOptions{}
 
 	cmd := &cobra.Command{
-		Use:                   "listInstances -p [-z] [-i] [-n] [-r]",
+		Use:                   "listInstances -p PROJECT [-z] [-i] [-n] [-r]",
 		DisableFlagsInUseLine: true,
 		Short:                 "List compute engine instances.",
 		Long:                  listInstancesLong,

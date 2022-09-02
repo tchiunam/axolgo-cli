@@ -148,12 +148,25 @@ To encrypt a message:
 ```console
 axolgo cryptography encrypt --key-file secret.key --message "Galaxy is a big space where there are many planets and stars."
 ```
+You will be prompted to enter the passphrase and message if you don't provide them as parameters:
+```console
+axolgo cryptography encrypt
+Enter passphrase: 
+Enter message to be encrypted. Enter a new line and press Ctrl+D to finish:
+<message here>
+```
 
 To decrypt a message:
 ```console
 axolgo cryptography decrypt --key-file secret.key --message 5602259f17f41c7a1289d26c4cc540bdfe939a93d4f01f4f6830739f2488c04e7875890280d966a3509217b73e290c2bcdbbf2b8676395bd87ae000dcac8343ac3cf3e389968e185f96810302947ea6809d62dfee404e318d2
 ```
-
+You will be prompted to enter the passphrase and message if you don't provide them as parameters:
+```console
+axolgo cryptography decrypt
+Enter passphrase: 
+Enter message to be decrypted. Enter a new line and press Ctrl+D to finish:
+<message here>
+```
 
 ## Test report
 ## Code Coverage graph

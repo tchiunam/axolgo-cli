@@ -23,10 +23,12 @@ THE SOFTWARE.
 package cryptography
 
 import (
+	"bufio"
 	"context"
 	"encoding/hex"
 	"fmt"
 	"os"
+	"strings"
 	"syscall"
 
 	"golang.org/x/term"
@@ -70,10 +72,7 @@ func NewCmdEncrypt(ctx *context.Context) *cobra.Command {
 	cmd.Flags().StringVarP(&o.KeyFile, "key-file", "k", "", "Key file.")
 	cmd.Flags().StringVarP(&o.Message, "message", "m", "", "Message to be encrypted.")
 
-	cmd.MarkFlagRequired("message")
-
 	return cmd
-
 }
 
 // Complete takes the command arguments and execute.
@@ -93,6 +92,15 @@ func (o *EncryptOptions) complete(_ *context.Context, _ *cobra.Command, args []s
 			klog.Errorf("Failed to read key file: %s", o.KeyFile)
 			return err
 		}
+	}
+	if o.Message == "" {
+		fmt.Println("Enter message to be encrypted. Enter a new line and press Ctrl+D to finish:")
+		scanner := bufio.NewScanner(os.Stdin)
+		input := make([]string, 0)
+		for scanner.Scan() {
+			input = append(input, scanner.Text())
+		}
+		o.Message = strings.Join(input, "\n")
 	}
 	data, err := cryptography.Encrypt([]byte(o.Message), string(passphrase))
 	fmt.Println(hex.EncodeToString(data))

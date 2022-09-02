@@ -36,7 +36,7 @@ var (
 	genPassphraseLong = "Generate a passphrase."
 
 	genPassphraseExample = `  # Generate a passphrase."
-  axolgo crytography genPassphrase
+  axolgo crytography genPassphrase --save-file secret.key
 `
 )
 
@@ -50,7 +50,7 @@ func NewCmdGenPassphrase(ctx *context.Context) *cobra.Command {
 	o := GenPassphraseOptions{}
 
 	cmd := &cobra.Command{
-		Use:                   "genPassphrase [-s]",
+		Use:                   "genPassphrase -s FILE",
 		DisableFlagsInUseLine: true,
 		Short:                 "Generate a passphrase.",
 		Long:                  genPassphraseLong,
@@ -67,7 +67,6 @@ func NewCmdGenPassphrase(ctx *context.Context) *cobra.Command {
 	cmd.MarkFlagRequired("save-file")
 
 	return cmd
-
 }
 
 // Complete takes the command arguments and execute.

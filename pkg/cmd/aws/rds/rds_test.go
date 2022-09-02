@@ -20,56 +20,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package cryptography
+package rds
 
 import (
-	"os"
-	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tchiunam/axolgo-cli/pkg/util"
 )
 
-// Initialize environment for the tests
-func init() {
-	util.InitAxolgoConfig(filepath.Join(filepath.Dir(""), "..", "..", "testdata", "config"))
-}
-
-// TestNewCmdGenPassphrase tests the NewCmdEncrypt function
-// to make sure it returns a valid command.
-func TestNewCmdGenPassphrase(t *testing.T) {
+// TestNewRdsCmd tests the NewRdsCmd function
+func TestNewRdsCmd(t *testing.T) {
 	cases := map[string]struct {
 		use      string
 		short    string
-		hasFlags bool
-		saveFile string
+		long     string
+		commands int
 	}{
-		"save file": {
-			use:      "genPassphrase -s FILE",
-			short:    "Generate a passphrase.",
-			hasFlags: true,
-			saveFile: filepath.Join("testdata", "secret-new.key"),
+		"valid command": {
+			use:      "rds",
+			short:    "A set of RDS commands.",
+			long:     "A set of RDS commands.",
+			commands: 2,
 		},
 	}
 
 	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {
-			oldArgs := os.Args
-			defer func() { os.Args = oldArgs }()
-			os.Args = []string{
-				"cmd",
-				"--save-file", c.saveFile}
-
-			cmd := NewCmdGenPassphrase(nil)
+			cmd := NewRdsCmd(nil)
 			assert.Equal(t, c.use, cmd.Use)
 			assert.Equal(t, c.short, cmd.Short)
-			assert.Equal(t, c.hasFlags, cmd.Flags().HasFlags())
-			assert.NoError(t, cmd.Execute())
-
-			if _, err := os.Stat(c.saveFile); err == nil {
-				os.Remove(c.saveFile)
-			}
+			assert.Equal(t, c.long, cmd.Long)
+			assert.GreaterOrEqual(t, len(cmd.Commands()), c.commands)
 		})
 	}
 }
