@@ -40,7 +40,7 @@ func TestNewCryptographyCmd(t *testing.T) {
 			use:      "cryptography",
 			short:    "Cryptography utilities for securing the resources you manage",
 			long:     "There are many cryptography implementations we can choose. This is a set of utilities that picked the useful ones and is designed to help you focus on your business requirements.",
-			commands: 2,
+			commands: 4,
 		},
 	}
 

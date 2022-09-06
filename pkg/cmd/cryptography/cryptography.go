@@ -43,6 +43,7 @@ func NewCryptographyCmd(ctx *context.Context) *cobra.Command {
 
 	cmd.AddCommand(
 		NewCmdEncrypt(ctx),
+		NewCmdEncryptFile(ctx),
 		NewCmdDecrypt(ctx),
 		NewCmdGenPassphrase(ctx),
 	)
