@@ -37,35 +37,44 @@ func init() {
 }
 
 // Clean up the test files
-func _cleanTestEncryptFile(
-	encOutputFilename string) {
+func _cleanTestDecryptFile(
+	encOutputFilename string,
+	decOutputFilename string) {
 	// Delete the encrypted file if it exists
 	if _, err := os.Stat(encOutputFilename); err == nil {
 		os.Remove(encOutputFilename)
 	}
+	// Delete the decrypted file if it exists
+	if _, err := os.Stat(decOutputFilename); err == nil {
+		os.Remove(decOutputFilename)
+	}
 }
 
-// TestNewCmdEncryptFile tests the NewCmdEncryptFile function
+// TestNewCmdDecryptFile tests the NewCmdDecryptFile function
 // to make sure it returns a valid command.
-func TestNewCmdEncryptFile(t *testing.T) {
+func TestNewCmdDecryptFile(t *testing.T) {
 	cases := map[string]struct {
-		use      string
-		short    string
-		hasFlags bool
-		keyFile  string
-		filePath string
+		use               string
+		short             string
+		hasFlags          bool
+		keyFile           string
+		filePath          string
+		encOutputFilename string
+		decOutputFilename string
 	}{
 		"valid command": {
-			use:      "encryptFile [-k] -f FILENAME",
-			short:    "Encrypt a file.",
-			hasFlags: true,
-			keyFile:  filepath.Join("testdata", "secret-test.key"),
-			filePath: filepath.Join("testdata", "story.txt"),
+			use:               "decryptFile [-k] -f FILENAME",
+			short:             "Decrypt a file.",
+			hasFlags:          true,
+			keyFile:           filepath.Join("testdata", "secret-test.key"),
+			filePath:          filepath.Join("testdata", "story.txt"),
+			encOutputFilename: filepath.Join("testdata", "story-encrypted.txt"),
+			decOutputFilename: filepath.Join("testdata", "story-encrypted-decrypted.txt"),
 		},
 	}
 
 	for name, c := range cases {
-		_cleanTestEncryptFile(filepath.Join("testdata", "story-encrypted.txt"))
+		_cleanTestDecryptFile(c.encOutputFilename, c.decOutputFilename)
 		t.Run(name, func(t *testing.T) {
 			oldArgs := os.Args
 			defer func() { os.Args = oldArgs }()
@@ -74,19 +83,27 @@ func TestNewCmdEncryptFile(t *testing.T) {
 				"--key-file", c.keyFile,
 				"--file", c.filePath}
 
-			cmd := NewCmdEncryptFile(nil)
-			assert.Equal(t, c.use, cmd.Use)
-			assert.Equal(t, c.short, cmd.Short)
-			assert.Equal(t, c.hasFlags, cmd.Flags().HasFlags())
-			assert.NoError(t, cmd.Execute())
+			encCmd := NewCmdEncryptFile(nil)
+			encCmd.Execute()
+
+			os.Args = []string{
+				"cmd",
+				"--key-file", c.keyFile,
+				"--file", c.encOutputFilename}
+
+			decCmd := NewCmdDecryptFile(nil)
+			assert.Equal(t, c.use, decCmd.Use)
+			assert.Equal(t, c.short, decCmd.Short)
+			assert.Equal(t, c.hasFlags, decCmd.Flags().HasFlags())
+			assert.NoError(t, decCmd.Execute())
 		})
-		_cleanTestEncryptFile(filepath.Join("testdata", "story-encrypted.txt"))
+		_cleanTestDecryptFile(c.encOutputFilename, c.decOutputFilename)
 	}
 }
 
-// TestNewCmdEncryptFileInvalid calls the NewCmdEncryptFile function with an invalid
+// TestNewCmdDecryptFileInvalid calls the NewCmdDecryptFile function with an invalid
 // input and verifies that an error is returned.
-func TestNewCmdEncryptFileInvalid(t *testing.T) {
+func TestNewCmdDecryptFileInvalid(t *testing.T) {
 	cases := map[string]struct {
 		use      string
 		short    string
@@ -109,7 +126,7 @@ func TestNewCmdEncryptFileInvalid(t *testing.T) {
 				"--key-file", c.keyFile,
 				"--file", c.filePath}
 
-			cmd := NewCmdEncryptFile(nil)
+			cmd := NewCmdDecryptFile(nil)
 			assert.Panics(t, func() { cmd.Execute() })
 		})
 	}

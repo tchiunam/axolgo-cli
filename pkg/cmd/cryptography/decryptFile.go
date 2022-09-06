@@ -37,29 +37,29 @@ import (
 )
 
 var (
-	encryptFileLong = "Encrypt the provided file with a key."
+	decryptFileLong = "Decrypt the provided file with a key."
 
-	encryptFileExample = `  # Encrypt the file 'example.txt with a key file.
-  axolgo crytography encryptFile --key-file secret.key --file example.txt
+	decryptFileExample = `  # Decrypt the file 'example.txt with a key file.
+  axolgo crytography decryptFile --key-file secret.key --file example.txt
 `
 )
 
-// EncryptFileOptions defines flags and other configuration parameters for the `encryptFile` command
-type EncryptFileOptions struct {
+// DecryptFileOptions defines flags and other configuration parameters for the `decryptFile` command
+type DecryptFileOptions struct {
 	KeyFile  string
 	FilePath string
 }
 
-// NewCmdEncryptFile creates the `encryptFile` command
-func NewCmdEncryptFile(ctx *context.Context) *cobra.Command {
-	o := EncryptFileOptions{}
+// NewCmdDecryptFile creates the `decryptFile` command
+func NewCmdDecryptFile(ctx *context.Context) *cobra.Command {
+	o := DecryptFileOptions{}
 
 	cmd := &cobra.Command{
-		Use:                   "encryptFile [-k] -f FILENAME",
+		Use:                   "decryptFile [-k] -f FILENAME",
 		DisableFlagsInUseLine: true,
-		Short:                 "Encrypt a file.",
-		Long:                  encryptFileLong,
-		Example:               encryptFileExample,
+		Short:                 "Decrypt a file.",
+		Long:                  decryptFileLong,
+		Example:               decryptFileExample,
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := o.complete(ctx, cmd, args); err != nil {
 				panic(err)
@@ -68,7 +68,7 @@ func NewCmdEncryptFile(ctx *context.Context) *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&o.KeyFile, "key-file", "k", "", "Key file.")
-	cmd.Flags().StringVarP(&o.FilePath, "file", "f", "", "File to be encrypted.")
+	cmd.Flags().StringVarP(&o.FilePath, "file", "f", "", "File to be decrypted.")
 
 	cmd.MarkFlagRequired("file")
 
@@ -76,7 +76,7 @@ func NewCmdEncryptFile(ctx *context.Context) *cobra.Command {
 }
 
 // Complete takes the command arguments and execute.
-func (o *EncryptFileOptions) complete(_ *context.Context, _ *cobra.Command, args []string) error {
+func (o *DecryptFileOptions) complete(_ *context.Context, _ *cobra.Command, args []string) error {
 	var passphrase []byte
 	var err error
 	if o.KeyFile == "" {
@@ -93,10 +93,10 @@ func (o *EncryptFileOptions) complete(_ *context.Context, _ *cobra.Command, args
 			return err
 		}
 	}
-	_, err = cryptography.EncryptFile(
+	_, err = cryptography.DecryptFile(
 		o.FilePath,
 		string(passphrase),
-		cryptography.WithOutputFilename(util.AddSuffixToFileName(o.FilePath, "-encrypted")),
+		cryptography.WithOutputFilename(util.AddSuffixToFileName(o.FilePath, "-decrypted")),
 	)
 
 	return err
