@@ -59,17 +59,29 @@ func TestNewCmdDecryptFile(t *testing.T) {
 		hasFlags          bool
 		keyFile           string
 		filePath          string
+		outputFilePath    string
 		encOutputFilename string
 		decOutputFilename string
 	}{
 		"valid command": {
-			use:               "decryptFile [-k] -f FILENAME",
+			use:               "decryptFile [-k] -f FILENAME -o OUTPUT_FILENAME",
 			short:             "Decrypt a file.",
 			hasFlags:          true,
 			keyFile:           filepath.Join("testdata", "secret-test.key"),
 			filePath:          filepath.Join("testdata", "story.txt"),
+			outputFilePath:    "",
 			encOutputFilename: filepath.Join("testdata", "story-encrypted.txt"),
 			decOutputFilename: filepath.Join("testdata", "story-encrypted-decrypted.txt"),
+		},
+		"valid command with output file": {
+			use:               "decryptFile [-k] -f FILENAME -o OUTPUT_FILENAME",
+			short:             "Decrypt a file.",
+			hasFlags:          true,
+			keyFile:           filepath.Join("testdata", "secret-test.key"),
+			filePath:          filepath.Join("testdata", "story.txt"),
+			outputFilePath:    filepath.Join("testdata", "story-decrypted.txt"),
+			encOutputFilename: filepath.Join("testdata", "story-encrypted.txt"),
+			decOutputFilename: filepath.Join("testdata", "story-decrypted.txt"),
 		},
 	}
 
@@ -90,6 +102,9 @@ func TestNewCmdDecryptFile(t *testing.T) {
 				"cmd",
 				"--key-file", c.keyFile,
 				"--file", c.encOutputFilename}
+			if c.outputFilePath != "" {
+				os.Args = append(os.Args, "--output-file", c.outputFilePath)
+			}
 
 			decCmd := NewCmdDecryptFile(nil)
 			assert.Equal(t, c.use, decCmd.Use)
