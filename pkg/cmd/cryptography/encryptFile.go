@@ -46,8 +46,9 @@ var (
 
 // EncryptFileOptions defines flags and other configuration parameters for the `encryptFile` command
 type EncryptFileOptions struct {
-	KeyFile  string
-	FilePath string
+	KeyFile        string
+	FilePath       string
+	OutputFilePath string
 }
 
 // NewCmdEncryptFile creates the `encryptFile` command
@@ -55,7 +56,7 @@ func NewCmdEncryptFile(ctx *context.Context) *cobra.Command {
 	o := EncryptFileOptions{}
 
 	cmd := &cobra.Command{
-		Use:                   "encryptFile [-k] -f FILENAME",
+		Use:                   "encryptFile [-k] -f FILENAME -o OUTPUT_FILENAME",
 		DisableFlagsInUseLine: true,
 		Short:                 "Encrypt a file.",
 		Long:                  encryptFileLong,
@@ -69,6 +70,7 @@ func NewCmdEncryptFile(ctx *context.Context) *cobra.Command {
 
 	cmd.Flags().StringVarP(&o.KeyFile, "key-file", "k", "", "Key file.")
 	cmd.Flags().StringVarP(&o.FilePath, "file", "f", "", "File to be encrypted.")
+	cmd.Flags().StringVarP(&o.OutputFilePath, "output-file", "o", "", "Output file.")
 
 	cmd.MarkFlagRequired("file")
 
@@ -93,10 +95,17 @@ func (o *EncryptFileOptions) complete(_ *context.Context, _ *cobra.Command, args
 			return err
 		}
 	}
+
+	var outputFilePath string
+	if o.OutputFilePath == "" {
+		outputFilePath = util.AddSuffixToFileName(o.FilePath, "-encrypted")
+	} else {
+		outputFilePath = o.OutputFilePath
+	}
 	_, err = cryptography.EncryptFile(
 		o.FilePath,
 		string(passphrase),
-		cryptography.WithOutputFilename(util.AddSuffixToFileName(o.FilePath, "-encrypted")),
+		cryptography.WithOutputFilename(outputFilePath),
 	)
 
 	return err
