@@ -49,18 +49,28 @@ func _cleanTestEncryptFile(
 // to make sure it returns a valid command.
 func TestNewCmdEncryptFile(t *testing.T) {
 	cases := map[string]struct {
-		use      string
-		short    string
-		hasFlags bool
-		keyFile  string
-		filePath string
+		use            string
+		short          string
+		hasFlags       bool
+		keyFile        string
+		filePath       string
+		outputFilePath string
 	}{
 		"valid command": {
-			use:      "encryptFile [-k] -f FILENAME",
-			short:    "Encrypt a file.",
-			hasFlags: true,
-			keyFile:  filepath.Join("testdata", "secret-test.key"),
-			filePath: filepath.Join("testdata", "story.txt"),
+			use:            "encryptFile [-k] -f FILENAME -o OUTPUT_FILENAME",
+			short:          "Encrypt a file.",
+			hasFlags:       true,
+			keyFile:        filepath.Join("testdata", "secret-test.key"),
+			filePath:       filepath.Join("testdata", "story.txt"),
+			outputFilePath: "",
+		},
+		"valid command with output file": {
+			use:            "encryptFile [-k] -f FILENAME -o OUTPUT_FILENAME",
+			short:          "Encrypt a file.",
+			hasFlags:       true,
+			keyFile:        filepath.Join("testdata", "secret-test.key"),
+			filePath:       filepath.Join("testdata", "story.txt"),
+			outputFilePath: filepath.Join("testdata", "story-encrypted.txt"),
 		},
 	}
 
@@ -73,6 +83,9 @@ func TestNewCmdEncryptFile(t *testing.T) {
 				"cmd",
 				"--key-file", c.keyFile,
 				"--file", c.filePath}
+			if c.outputFilePath != "" {
+				os.Args = append(os.Args, "--output-file", c.outputFilePath)
+			}
 
 			cmd := NewCmdEncryptFile(nil)
 			assert.Equal(t, c.use, cmd.Use)
