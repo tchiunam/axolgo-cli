@@ -46,8 +46,9 @@ var (
 
 // DecryptFileOptions defines flags and other configuration parameters for the `decryptFile` command
 type DecryptFileOptions struct {
-	KeyFile  string
-	FilePath string
+	KeyFile        string
+	FilePath       string
+	OutputFilePath string
 }
 
 // NewCmdDecryptFile creates the `decryptFile` command
@@ -55,7 +56,7 @@ func NewCmdDecryptFile(ctx *context.Context) *cobra.Command {
 	o := DecryptFileOptions{}
 
 	cmd := &cobra.Command{
-		Use:                   "decryptFile [-k] -f FILENAME",
+		Use:                   "decryptFile [-k] -f FILENAME -o OUTPUT_FILENAME",
 		DisableFlagsInUseLine: true,
 		Short:                 "Decrypt a file.",
 		Long:                  decryptFileLong,
@@ -69,6 +70,7 @@ func NewCmdDecryptFile(ctx *context.Context) *cobra.Command {
 
 	cmd.Flags().StringVarP(&o.KeyFile, "key-file", "k", "", "Key file.")
 	cmd.Flags().StringVarP(&o.FilePath, "file", "f", "", "File to be decrypted.")
+	cmd.Flags().StringVarP(&o.OutputFilePath, "output-file", "o", "", "Output file.")
 
 	cmd.MarkFlagRequired("file")
 
@@ -93,10 +95,17 @@ func (o *DecryptFileOptions) complete(_ *context.Context, _ *cobra.Command, args
 			return err
 		}
 	}
+
+	var outputFilePath string
+	if o.OutputFilePath == "" {
+		outputFilePath = util.AddSuffixToFileName(o.FilePath, "-decrypted")
+	} else {
+		outputFilePath = o.OutputFilePath
+	}
 	_, err = cryptography.DecryptFile(
 		o.FilePath,
 		string(passphrase),
-		cryptography.WithOutputFilename(util.AddSuffixToFileName(o.FilePath, "-decrypted")),
+		cryptography.WithOutputFilename(outputFilePath),
 	)
 
 	return err
