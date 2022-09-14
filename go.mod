@@ -11,9 +11,9 @@ require (
 	github.com/tchiunam/axolgo-cloud v1.0.0
 	github.com/tchiunam/axolgo-lib v1.0.2
 	golang.org/x/term v0.0.0-20220722155259-a9ba230a4035
-	google.golang.org/api v0.94.0
-	google.golang.org/genproto v0.0.0-20220902135211-223410557253
-	k8s.io/klog/v2 v2.80.0
+	google.golang.org/api v0.95.0
+	google.golang.org/genproto v0.0.0-20220913154956-18f8339a66a5
+	k8s.io/klog/v2 v2.80.1
 )
 
 require (
@@ -51,9 +51,9 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.4.1 // indirect
 	go.opencensus.io v0.23.0 // indirect
-	golang.org/x/net v0.0.0-20220826154423-83b083e8dc8b // indirect
-	golang.org/x/oauth2 v0.0.0-20220822191816-0ebed06d0094 // indirect
-	golang.org/x/sys v0.0.0-20220829200755-d48e67d00261 // indirect
+	golang.org/x/net v0.0.0-20220909164309-bea034e7d591 // indirect
+	golang.org/x/oauth2 v0.0.0-20220909003341-f21342109be1 // indirect
+	golang.org/x/sys v0.0.0-20220913175220-63ea55921009 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/grpc v1.49.0 // indirect

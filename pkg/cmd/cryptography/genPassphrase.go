@@ -72,7 +72,7 @@ func NewCmdGenPassphrase(ctx *context.Context) *cobra.Command {
 // Complete takes the command arguments and execute.
 func (o *GenPassphraseOptions) complete(_ *context.Context, _ *cobra.Command, args []string) error {
 	if passphrase, err := cryptography.GeneratePassphrase(50); err == nil {
-		if err = os.WriteFile(o.SaveFile, []byte(passphrase), 0644); err != nil {
+		if err = os.WriteFile(o.SaveFile, []byte(passphrase+"\n"), 0644); err != nil {
 			klog.Errorf("Failed to write passphrase into file: %s", o.SaveFile)
 			return err
 		}
