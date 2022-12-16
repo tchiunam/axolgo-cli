@@ -170,7 +170,7 @@ Enter message to be decrypted. Enter a new line and press Ctrl+D to finish:
 
 ## Test report
 ## Code Coverage graph
-![Code Coverage graph](https://codecov.io/gh/tchiunam/axolgo-cli/branch/main/graphs/tree.svg?token=R38VYBN1AL)
+[![Code Coverage graph](https://codecov.io/gh/tchiunam/axolgo-cli/branch/main/graphs/tree.svg?token=R38VYBN1AL)](https://app.codecov.io/gh/tchiunam/axolgo-cli)
 
 ---
 #### See more  
